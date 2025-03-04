@@ -6,6 +6,7 @@ editor: visual
 
 ## Introduction
 
+<<<<<<< HEAD
 Over the years, there has been an increase in the health awareness of the Scottish population, with a fear that the country as a whole is becoming overweight. The body mass index (BMI) is a quick way to measure weight relative to height, and screen for people that are underweight, overweight, or obese.
 
 We aim to answer two questions:
