@@ -4,23 +4,19 @@ format: pdf
 editor: visual
 ---
 
-## Quarto
+## Introduction
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-k
-## Running Code
+<<<<<<< HEAD
+Over the years, there has been an increase in the health awareness of the Scottish population, with a fear that the country as a whole is becoming overweight. The body mass index (BMI) is a quick way to measure weight relative to height, and screen for people that are underweight, overweight, or obese.
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+We aim to answer two questions:
 
-```{r}
-1 + 1
-```
+1.  Has the BMI in Scotland changed over the given years of the Scottish Health Survey?
 
-You can add options to executable code like this
+2.  Are there any difference in the BMI distributions by age, gender, socio-economic status or lifestyle factors?
 
-```{r}
-#| echo: false
-2 * 2
-```
+## Exploratory Analysis
 
-The `echo: false` option disables the printing of code (only output is displayed).
+## Formal Analysis
+
+## Conclusion
