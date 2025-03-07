@@ -1,0 +1,141 @@
+---
+title: "Data analysis project 12"
+format: html
+editor: visual
+execute: 
+  echo: false
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(dplyr)
+library(ggplot2) 
+library(tidyverse)
+library(tidymodels)
+library(performance)
+library(tinytex)
+
+obesity <- read.csv("DAProject12.csv")
+BMI <- obesity
+```
+
+# Introduction {#sec-intro}
+
+Over the years, there has been an increase in the health awareness of the Scottish population, with a fear that the country as a whole is becoming overweight. The body mass index (BMI) is a quick way to measure weight relative to height, and screen for people that are underweight, overweight, or obese.
+
+We aim to answer two questions:
+
+1.  Has the BMI in Scotland changed over the given years of the Scottish Health Survey?
+
+2.  Are there any difference in the BMI distributions by age, gender, socio-economic status or lifestyle factors?
+
+# Exploratory data analysis {#sec-expdata}
+
+```{r}
+
+bmi_trends <- obesity%>% group_by(Year, BMIgroup) %>% summarise(count = n(), .groups =
+"drop") %>% group_by(Year) %>% mutate(proportion = count / sum(count))
+
+```
+
+
+# Formal data analysis {#sec-formdata}
+
+| Year | Obese proportions |
+|------|-------------------|
+| 2013 | 0.30300569        |
+| 2014 | 0.30181715        |
+| 2015 | 0.30645161        |
+| 2016 | 0.30536494        |
+
+```{r}
+bmi_trends <- bmi_trends %>%
+  mutate(obese_binary = ifelse(BMIgroup == "Obese", 1, 0))
+
+```
+
+```{r}
+#| echo: false
+bmi_trends$BMIgroup<-as.factor(bmi_trends$BMIgroup)
+levels(bmi_trends$BMIgroup)<-c("Not Obese","Obese","Not Obese","Not Obese")
+trend_table <- table(bmi_trends$Year, bmi_trends$obese_binary)
+head(trend_table)
+prop.trend.test(x = trend_table[,2],  
+                n = rowSums(trend_table))  
+unique(bmi_trends$Year)
+unique(bmi_trends$obese_binary)
+bmi_trends$Year<-as.factor(bmi_trends$Year)
+chisq.test(trend_table)
+```
+
+```{r}
+glm_model <- glm(obese_binary ~ as.numeric(Year), 
+                 data = bmi_trends, family = binomial)
+summary(glm_model)
+
+```
+
+### Question 2
+
+To answer the second question, we use linear regression to find out if age, gender, socio-economic status, or lifestyle factors are significant predictors for obesity.
+
+We start by looking at if age is a significant predictor.
+
+```{r}
+#| echo: false
+#| eval: true
+BMI$BMIgroup <- as.factor(BMI$BMIgroup)
+levels(BMI$BMIgroup) <- c("Not Obese", "Obese", "Not Obese", "Not Obese")
+
+# Regression to check if Age is a significant predictor
+model_age <- glm(BMIgroup ~ Age,
+                     data = BMI,
+                     family = binomial)
+
+# Interpretation is in log-odds!
+model_age %>% tidy(conf.int = T)
+
+# Model diagnostics - Checking for overdispersion
+check_overdispersion(model_age)
+```
+
+We now look at sex to consider if it is significant
+
+```{r}
+#| echo: false
+#| eval: true
+# Regression to check if Sex is a significant predictor
+model_sex <- glm(BMIgroup ~ Sex,
+                     data = BMI,
+                     family = binomial)
+
+# Interpretation is in the log-odds scale
+model_sex %>% tidy(conf.int = T) # P-value of 0.0247 -> sex is significant
+
+# Then checking for overdispersion
+check_overdispersion(model_sex)
+```
+
+We now look at education to consider if there is a difference in obesity based on socio-economic factors
+
+```{r}
+#| echo: false
+#| eval: true
+# Regression to check if the various levels of education are significant as predictors
+model_edu <- glm(BMIgroup ~ Education,
+                     data = BMI,
+                     family = binomial)
+
+# interpretation is in the log-odds scale
+model_edu %>% tidy(conf.int = T) # All are significant
+
+# We again check for overdispersion
+check_overdispersion(model_edu)
+```
+
+## Results {#sec-results}
+
+# Conclusions {#sec-conc}
