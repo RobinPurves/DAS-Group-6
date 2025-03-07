@@ -2,13 +2,72 @@
 title: "Data analysis project 12"
 format: html
 editor: visual
+execute: 
+  echo: false
 ---
 
 # Introduction {#sec-intro}
 
 # Exploratory data analysis {#sec-expdata}
 
+```{r}
+#|echo: false
+#|warning: false
+#|message: false
+library(dplyr)
+library(ggplot2) 
+library(tidyverse) 
+obesity<-read.csv("~/Downloads/DAProject12 (1).csv")
+```
+
+```{r}
+
+bmi_trends <- obesity%>% group_by(Year, BMIgroup) %>% summarise(count = n(), .groups =
+"drop") %>% group_by(Year) %>% mutate(proportion = count / sum(count))
+
+```
+
+```{r}
+obesity<- obesity %>%
+  mutate(obese_binary = ifelse(BMIgroup == "Obese", 1, 0))
+
+```
+
 # Formal data analysis {#sec-formdata}
+
+| Year | Obese proportions |
+|------|-------------------|
+| 2013 | 0.30300569        |
+| 2014 | 0.30181715        |
+| 2015 | 0.30645161        |
+| 2016 | 0.30536494        |
+
+```{r}
+bmi_trends <- bmi_trends %>%
+  mutate(obese_binary = ifelse(BMIgroup == "Obese", 1, 0))
+
+```
+
+```{r}
+#| echo: false
+bmi_trends$BMIgroup<-as.factor(bmi_trends$BMIgroup)
+levels(bmi_trends$BMIgroup)<-c("Not Obese","Obese","Not Obese","Not Obese")
+trend_table <- table(bmi_trends$Year, bmi_trends$obese_binary)
+head(trend_table)
+prop.trend.test(x = trend_table[,2],  
+                n = rowSums(trend_table))  
+unique(bmi_trends$Year)
+unique(bmi_trends$obese_binary)
+bmi_trends$Year<-as.factor(bmi_trends$Year)
+chisq.test(trend_table)
+```
+
+```{r}
+glm_model <- glm(obese_binary ~ as.numeric(Year), 
+                 data = bmi_trends, family = binomial)
+summary(glm_model)
+
+```
 
 ## Statistical model {#sec-statsmodel}
 
