@@ -269,6 +269,18 @@ $ BMIgroup  &lt;chr&gt; "Obese", "Overweight", "Normal", "Normal", "Normal", "No
 <li><p>BMI categories contain multiple classifications, which will later be converted into a binary variable for analysis.</p></li>
 </ul>
 </section>
+<section id="identifying-outliers" class="level2">
+<h2 class="anchored" data-anchor-id="identifying-outliers">Identifying outliers:</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Data-analysis-12_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 <section id="creating-a-binary-obesity-classification" class="level2">
 <h2 class="anchored" data-anchor-id="creating-a-binary-obesity-classification">Creating a Binary Obesity Classification</h2>
 <p>Since we want to analyze obesity prevalence, we create a new binary response variable where:</p>
@@ -291,7 +303,7 @@ $ BMIgroup  &lt;chr&gt; "Obese", "Overweight", "Normal", "Normal", "Normal", "No
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Data-analysis-12_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Data-analysis-12_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -310,7 +322,7 @@ $ BMIgroup  &lt;chr&gt; "Obese", "Overweight", "Normal", "Normal", "Normal", "No
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Data-analysis-12_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Data-analysis-12_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -325,7 +337,7 @@ $ BMIgroup  &lt;chr&gt; "Obese", "Overweight", "Normal", "Normal", "Normal", "No
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="Data-analysis-12_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="Data-analysis-12_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -335,6 +347,35 @@ $ BMIgroup  &lt;chr&gt; "Obese", "Overweight", "Normal", "Normal", "Normal", "No
 </ul>
 </section>
 </section>
+</section>
+<section id="correlation-analysis" class="level1">
+<h1>Correlation Analysis</h1>
+<p>Examining the relationship between <strong>Age</strong> and <strong>Obesity</strong>.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  obesity$Age and obesity$ObeseBinary
+t = 11.804, df = 14015, p-value &lt; 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.08279939 0.11558340
+sample estimates:
+       cor 
+0.09921832 </code></pre>
+</div>
+</div>
+<p>The correlation is 0.099 which is suggesting a weak linear relationship # Age vs.&nbsp;Obesity</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Data-analysis-12_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="sec-formdata" class="level1">
 <h1>Formal data analysis</h1>
@@ -464,7 +505,7 @@ Please re-install lme4 from source or restore original 'Matrix' package</code></
 <pre><code># Overdispersion test
 
  dispersion ratio = 1.000
-          p-value = 0.984</code></pre>
+          p-value =     1</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>No overdispersion detected.</code></pre>

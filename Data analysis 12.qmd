@@ -68,6 +68,15 @@ Key observations from the summary statistics:
 
 -   BMI categories contain multiple classifications, which will later be converted into a binary variable for analysis.
 
+## Identifying outliers: 
+
+```{r}
+ggplot(obesity, aes(x = BMIgroup, y = Age)) +
+  geom_boxplot(fill = "#2c3e50", color = "white") +
+  theme_minimal() +
+  labs(title = "Boxplot of Age by BMI Group", x = "BMI Group", y = "Age")
+```
+
 ## Creating a Binary Obesity Classification
 
 Since we want to analyze obesity prevalence, we create a new binary response variable where:
@@ -138,8 +147,21 @@ ggplot(obesity_sex_counts, aes(x = Sex, y = Count, fill = Sex)) +
   theme_minimal() +
   labs(title = "Obesity Prevalence by Sex", x = "Sex", y = "Count of Obese Individuals")
 ```
-
 - Females exhibit higher obesity rates compared to males.
+
+# Correlation Analysis
+Examining the relationship between **Age** and **Obesity**.
+```{r}
+cor.test(obesity$Age, obesity$ObeseBinary, method = "pearson")
+```
+The correlation is 0.099 which is suggesting a weak linear relationship
+# Age vs. Obesity
+```{r}
+ggplot(obesity, aes(x = Age, y = ObeseBinary)) +
+  geom_jitter(alpha = 0.3, color = "#2c3e50") +
+  theme_minimal() +
+  labs(title = "Scatterplot of Age vs. Obesity", x = "Age", y = "Obesity (1 = Obese, 0 = Not Obese)")
+```
 
 
 ```{r}
