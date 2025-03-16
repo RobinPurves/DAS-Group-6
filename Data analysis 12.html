@@ -34,6 +34,35 @@ ul.task-list li input[type="checkbox"] {
 <link href="Data analysis 12_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="Data analysis 12_files/libs/bootstrap/bootstrap-8a79a254b8e706d3c925cde0a310d4f0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -73,6 +102,36 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="sec-expdata" class="level1">
 <h1>Exploratory data analysis</h1>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p>Formal-Analysis-Q2</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p>Formal-Analysis-Q2</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 </section>
 <section id="sec-formdata" class="level1">
 <h1>Formal data analysis</h1>
@@ -164,67 +223,206 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <section id="question-2" class="level3">
 <h3 class="anchored" data-anchor-id="question-2">Question 2</h3>
 <p>To answer the second question, we use linear regression to find out if age, gender, socio-economic status, or lifestyle factors are significant predictors for obesity.</p>
-<p>We start by looking at if age is a significant predictor.</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 7
-  term        estimate std.error statistic   p.value conf.low conf.high
-  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
-1 (Intercept)  -1.47     0.0583      -25.1 2.12e-139  -1.58     -1.35  
-2 Age           0.0124   0.00106      11.7 1.29e- 31   0.0103    0.0144</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code># Overdispersion test
+<p>We start by looking at if age is a significant predictor for a persons BMI group. We are fitting the following linear model: <span class="math display">\[
+y_i = \beta_0 + \beta_1 x_i + \epsilon_i, ~~~~~ \epsilon_i \sim N(0, \sigma^2), ~~~~~ i = 1, ... , 14017
+\]</span></p>
+<p>Here, <span class="math inline">\(y_i\)</span> is the BMI group of the ith individual, <span class="math inline">\(x_i\)</span> is the age of the ith individual, and <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span> are regression coefficients</p>
+<div class="cell" data-warnings="false">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: normal; font-weight: bold; padding: 0.2cm;">&nbsp;</td>
+<td colspan="3" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: normal; font-weight: bold; padding: 0.2cm;">BM Igroup</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">Predictors</td>
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">Odds Ratios</td>
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">CI</td>
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">p</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">(Intercept)</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">4.33</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">3.86&nbsp;–&nbsp;4.86</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>&lt;0.001</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">Age</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.99</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.99&nbsp;–&nbsp;0.99</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>&lt;0.001</strong></td>
+</tr>
+</tbody>
+</table>
 
- dispersion ratio = 1.001
-          p-value = 0.888</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>No overdispersion detected.</code></pre>
-</div>
-</div>
-<p>We now look at sex to consider if it is significant</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2 × 7
-  term        estimate std.error statistic   p.value conf.low conf.high
-  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
-1 (Intercept)   -0.779    0.0244    -31.9  6.84e-224   -0.826   -0.731 
-2 SexMale       -0.112    0.0371     -3.03 2.46e-  3   -0.185   -0.0397</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code># Overdispersion test
 
- dispersion ratio = 1.000
-          p-value = 0.984</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>No overdispersion detected.</code></pre>
 </div>
 </div>
-<p>We now look at education to consider if there is a difference in obesity based on socio-economic factors</p>
+<p>As seen from the p-value, we can infer that age is a significant predictor for a persons BMI group. As someones age increases by one year, the log odds of the person being obese increase by a factor of 0.99.</p>
+<p>We now check the assumptions of our model, to find out if the model is valid.</p>
 <div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 6 × 7
-  term                 estimate std.error statistic   p.value conf.low conf.high
-  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
-1 (Intercept)            -1.11     0.0349    -32.0  4.21e-224  -1.18      -1.05 
-2 EducationHigher gra…    0.178    0.0590      3.02 2.56e-  3   0.0620     0.293
-3 EducationHNC/D or e…    0.329    0.0631      5.21 1.90e-  7   0.205      0.452
-4 EducationNo qualifi…    0.632    0.0549     11.5  1.34e- 30   0.524      0.739
-5 EducationOther scho…    0.518    0.0833      6.22 5.13e- 10   0.354      0.680
-6 EducationStandard g…    0.401    0.0543      7.39 1.49e- 13   0.295      0.508</code></pre>
+<div class="cell-output-display">
+<div id="fig-diagnostics1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-diagnostics1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Data-analysis-12_files/figure-html/fig-diagnostics1-1.png" class="img-fluid figure-img" width="672">
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code># Overdispersion test
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diagnostics1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Diagnostic plots for the age model
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>There is no issues that can be seen in the posterior predictive check, influential obesvations graph, and the uniformity of resuduals graph. There does appear to be a large amount of points falling outiwth the error bounds in the binned residuals graph. We would expect about 95% of points to fall within the error bounds if the model is true. As there is a large amount of points plotted it is hard to tell if there is 95% within the error bounds, as there may be overlap. However, it appears to be good enough.</p>
+<p>We now look at sex to consider if it is significant through fitting the following model:</p>
+<p><span class="math display">\[
+y_i = \beta_0 + \beta_1 x_i + \epsilon_i, ~~~~~ \epsilon_i \sim N(0, \sigma^2), ~~~~~ i = 1, ... , 14017
+\]</span></p>
+<p>Where <span class="math inline">\(x_i\)</span> is an indicator variable taking the value 1 if the individual is a male and the value 0 if the individual is a female.</p>
+<div class="cell" data-warnings="false">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: normal; font-weight: bold; padding: 0.2cm;">&nbsp;</td>
+<td colspan="3" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: normal; font-weight: bold; padding: 0.2cm;">BM Igroup</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">Predictors</td>
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">Odds Ratios</td>
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">CI</td>
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">p</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">(Intercept)</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">2.18</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">2.08&nbsp;–&nbsp;2.29</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>&lt;0.001</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">Sex [Male]</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">1.12</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">1.04&nbsp;–&nbsp;1.20</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>0.002</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm; border-top: 1px solid;">R<sup>2</sup> Tjur</td>
+<td colspan="3" style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm; border-top: 1px solid;">0.001</td>
+</tr>
+</tbody>
+</table>
 
- dispersion ratio = 1.001
-          p-value = 0.968</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>No overdispersion detected.</code></pre>
+
 </div>
 </div>
+<p>As seen from table 2, the p-value indicates that sex is a significant predictor at the 5% significance level. Furthermore, the log odds of being obese increase by 1.12 if the individual is a male.</p>
+<p>Again, we check our model assumptions to find out if our results are valid.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-diagnostics2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-diagnostics2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Data-analysis-12_files/figure-html/fig-diagnostics2-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diagnostics2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Diagnostic plots for the sex model
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The plots in figure 2 look good enough. There may be issues with the binned residuals plot, however the issue likely stems from sex being a factor with 2 levels giving us only 2 points.</p>
+<p>We now look at education to consider if there is a difference in obesity based on socio-economic factors. We fit the following model</p>
+<div class="cell" data-warnings="false">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: normal; font-weight: bold; padding: 0.2cm;">&nbsp;</td>
+<td colspan="3" data-quarto-table-cell-role="th" style="text-align: center; border-top: double; font-style: normal; font-weight: bold; padding: 0.2cm;">BM Igroup</td>
+</tr>
+<tr class="even">
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">Predictors</td>
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">Odds Ratios</td>
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">CI</td>
+<td style="text-align: center; border-bottom: 1px solid; font-style: italic; font-weight: normal;">p</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">(Intercept)</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">3.05</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">2.85&nbsp;–&nbsp;3.26</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>&lt;0.001</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">Education [Higher grade<br>
+or equiv]</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.84</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.75&nbsp;–&nbsp;0.94</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>0.003</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">Education [HNC/D or<br>
+equiv]</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.72</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.64&nbsp;–&nbsp;0.82</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>&lt;0.001</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">Education [No<br>
+qualifications]</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.53</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.48&nbsp;–&nbsp;0.59</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>&lt;0.001</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">Education [Other school<br>
+level]</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.60</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.51&nbsp;–&nbsp;0.70</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>&lt;0.001</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">Education [Standard grade<br>
+or equiv]</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.67</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;">0.60&nbsp;–&nbsp;0.74</td>
+<td style="text-align: left; padding: 0.2cm; vertical-align: top;"><strong>&lt;0.001</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm; border-top: 1px solid;">R<sup>2</sup> Tjur</td>
+<td colspan="3" style="text-align: left; padding: 0.2cm; vertical-align: top; padding-top: 0.1cm; padding-bottom: 0.1cm; border-top: 1px solid;">0.011</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>As seen from table 3, all the levels of education are considered significant predictors of the persons BMI group. The log odds of a person being obese is 3.05 for a person with a degree, then increases by 0.53-0.84 depending on qualification level.</p>
+<p>Again, we have to check the model assumptions.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-diagnostics3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-diagnostics3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="Data-analysis-12_files/figure-html/fig-diagnostics3-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diagnostics3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Diagnostic plots for the education model
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The interpretation of figure 3 is much like the previous figures. The only graph that leaves cause for concern is the binned residuals graph, but again, becuase it is a factor, it is always going to not work as well as a continuous variable. Thus, the model is appropriate.</p>
 </section>
 <section id="sec-results" class="level2">
 <h2 class="anchored" data-anchor-id="sec-results">Results</h2>
@@ -232,6 +430,22 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </section>
 <section id="sec-conc" class="level1">
 <h1>Conclusions</h1>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p>Formal-Analysis-Q2</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>From the previous tests, we have seen that age, sex, and education are all significant in the prediction of an individuals BMI group, indicating differences in obesity across these factors. As age increases, the log odds of obesity rise. Males have higher log odds of being obese than females, and lower education levels are associated with greater log odds of obesity.</p>
 </section>
 
 </main>
