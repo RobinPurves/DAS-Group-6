@@ -18,6 +18,8 @@ library(tidymodels)
 library(performance)
 library(tinytex)
 library(skimr)
+library(kableExtra)
+
 
 obesity <- read.csv("~/Downloads/DAProject12.csv")
 BMI <- obesity
@@ -40,6 +42,12 @@ By analyzing this data, we aim to identify patterns that could inform public hea
 
 ## Data Overview
 
+```{r}
+head(obesity)
+glimpse(obesity)
+colSums(is.na(obesity))
+```
+
 The dataset consists of 14,017 observations with the following columns:
 
 **Age**: Age of individuals
@@ -57,7 +65,25 @@ The dataset consists of 14,017 observations with the following columns:
 Computing descriptive statistics helps understand the distribution of the data.
 
 ```{r}
-skim(obesity)
+summary_table <- obesity %>% 
+  summarise(
+    Sample_Size = n(),
+    Mean_Age = mean(Age, na.rm = TRUE),
+    Median_Age = median(Age, na.rm = TRUE),
+    Min_Age = min(Age, na.rm = TRUE),
+    Q1_Age = quantile(Age, 0.25, na.rm = TRUE),
+    Q3_Age = quantile(Age, 0.75, na.rm = TRUE),
+    Max_Age = max(Age, na.rm = TRUE),
+    Std_Age = sd(Age, na.rm = TRUE)
+  )
+
+kable(summary_table, caption = "Summary Statistics of the Dataset") %>% 
+  kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover"))
+```
+
+```{r}
+kable(summary_table, caption = "Summary Statistics of the Dataset") %>% 
+kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover"))
 ```
 
 Key observations from the summary statistics:
@@ -68,7 +94,40 @@ Key observations from the summary statistics:
 
 -   BMI categories contain multiple classifications, which will later be converted into a binary variable for analysis.
 
-## Identifying outliers: 
+## Identifying Distribution and Checking Normality
+
+We use a histogram to visualize the distribution of age and assess normality.
+
+```{r}
+ggplot(obesity, aes(x = Age)) +
+  geom_histogram(binwidth = 5, fill = "#2c3e50", color = "white", alpha = 0.8) +
+  theme_minimal() +
+  labs(title = "Histogram of Age Distribution", x = "Age", y = "Count")
+```
+
+The histogram reveals that the age distribution in the dataset is approximately **bell-shaped** but slightly **right-skewed**. The majority of individuals fall within the **40-60 age range**, while younger individuals (\<20 years) and older individuals (\>80 years) are less represented. The right skew suggests that there are **more older individuals in the dataset than younger ones**. While the distribution is close to normal, further statistical tests such as a **Q-Q plot** can confirm normality.
+
+While the distribution is close to normal, further statistical tests such as a **Q-Q plot** can confirm normality.
+
+```{r}
+ggplot(obesity, aes(sample = Age)) +
+  stat_qq() +
+  stat_qq_line() +
+  theme_minimal() +
+  labs(title = "Q-Q Plot for Age Distribution", x = "Theoretical Quantiles", y = "Sample Quantiles")
+```
+
+The **Q-Q plot** provides further insights into the normality of the age distribution. Ideally, if the data follows a normal distribution, the points should closely follow the **diagonal reference line**. However, in the plot:
+
+-   The points deviate from the **diagonal line at both tails**, suggesting that the age distribution has **heavy tails** and potential skewness.
+
+-   The slight **concave shape** indicates a **right-skewed distribution**, aligning with what was observed in the histogram.
+
+-   This suggests that the data may **not be perfectly normally distributed**, which could influence statistical modeling that assumes normality.
+
+## Identifying outliers:
+
+To detect outliers, we use a **boxplot** to visualize the spread of ages within each 
 
 ```{r}
 ggplot(obesity, aes(x = BMIgroup, y = Age)) +
@@ -76,6 +135,14 @@ ggplot(obesity, aes(x = BMIgroup, y = Age)) +
   theme_minimal() +
   labs(title = "Boxplot of Age by BMI Group", x = "BMI Group", y = "Age")
 ```
+
+The boxplot provides a visual summary of the distribution of **age across different BMI categories (Normal, Obese, Overweight, and Underweight)**. Key observations include:
+
+-   The **median age varies slightly across BMI groups**, with individuals classified as overweight and obese tending to be older than those in the normal or underweight categories.
+
+-   The **interquartile range (IQR)** (middle 50% of the data) shows that most individuals are between **40 and 70 years old**, regardless of BMI classification.
+
+-   There are **potential outliers**, particularly among **younger and older individuals**, indicating that some individuals outside the usual age range may require further investigation.
 
 ## Creating a Binary Obesity Classification
 
@@ -147,22 +214,25 @@ ggplot(obesity_sex_counts, aes(x = Sex, y = Count, fill = Sex)) +
   theme_minimal() +
   labs(title = "Obesity Prevalence by Sex", x = "Sex", y = "Count of Obese Individuals")
 ```
-- Females exhibit higher obesity rates compared to males.
+
+-   Females exhibit higher obesity rates compared to males.
 
 # Correlation Analysis
+
 Examining the relationship between **Age** and **Obesity**.
+
 ```{r}
 cor.test(obesity$Age, obesity$ObeseBinary, method = "pearson")
 ```
-The correlation is 0.099 which is suggesting a weak linear relationship
-# Age vs. Obesity
+
+The correlation is 0.099 which is suggesting a weak linear relationship \# Age vs. Obesity
+
 ```{r}
 ggplot(obesity, aes(x = Age, y = ObeseBinary)) +
   geom_jitter(alpha = 0.3, color = "#2c3e50") +
   theme_minimal() +
   labs(title = "Scatterplot of Age vs. Obesity", x = "Age", y = "Obesity (1 = Obese, 0 = Not Obese)")
 ```
-
 
 ```{r}
 
