@@ -224,7 +224,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <h3 class="anchored" data-anchor-id="question-2">Question 2</h3>
 <p>To answer the second question, we use linear regression to find out if age, gender, socio-economic status, or lifestyle factors are significant predictors for obesity.</p>
 <p>We start by looking at if age is a significant predictor for a persons BMI group. We are fitting the following linear model: <span class="math display">\[
-y_i = \beta_0 + \beta_1 x_i + \epsilon_i, ~~~~~ \epsilon_i \sim N(0, \sigma^2), ~~~~~ i = 1, ... , 14017
+log(\frac{obese}{1 - obese}) = \beta_0 + \beta_1 x_i + \epsilon_i, ~~~~~ \epsilon_i \sim N(0, \sigma^2), ~~~~~ i = 1, ... , 14017
 \]</span></p>
 <p>Here, <span class="math inline">\(y_i\)</span> is the BMI group of the ith individual, <span class="math inline">\(x_i\)</span> is the age of the ith individual, and <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span> are regression coefficients</p>
 <div class="cell" data-warnings="false">
