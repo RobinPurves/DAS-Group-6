@@ -95,7 +95,7 @@ To answer the second question, we use linear regression to find out if age, gend
 
 We start by looking at if age is a significant predictor for a persons BMI group. We are fitting the following linear model: 
 $$
-y_i = \beta_0 + \beta_1 x_i + \epsilon_i, ~~~~~ \epsilon_i \sim N(0, \sigma^2), ~~~~~ i = 1, ... , 14017
+log(\frac{obese}{1 - obese}) = \beta_0 + \beta_1 x_i + \epsilon_i, ~~~~~ \epsilon_i \sim N(0, \sigma^2), ~~~~~ i = 1, ... , 14017
 $$
 
 Here, $y_i$ is the BMI group of the ith individual, $x_i$ is the age of the ith individual, and $\beta_0$, $\beta_1$ are regression coefficients
@@ -165,6 +165,13 @@ model_sex <- glm(BMIgroup ~ Sex,
                      data = BMI,
                      family = binomial)
 
+BMI$Sex <- as.factor(BMI$Sex)
+BMI$Sex <- relevel(BMI$Sex, ref = "Male")
+
+model_sex <- glm(BMIgroup ~ Sex,
+                     data = BMI,
+                     family = binomial)
+                     
 tab_model(model_sex, show.obs = FALSE)
 ```
 
