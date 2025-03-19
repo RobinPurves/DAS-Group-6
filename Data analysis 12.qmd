@@ -85,10 +85,10 @@ To answer the second question, we use linear regression to find out if age, gend
 
 We start by looking at if age is a significant predictor for a persons BMI group. We are fitting the following linear model: 
 $$
-log(\frac{obese}{1 - obese}) = \beta_0 + \beta_1 x_i + \epsilon_i, ~~~~~ \epsilon_i \sim N(0, \sigma^2), ~~~~~ i = 1, ... , 14017
+logit(obese) = \beta_0 + \beta_1 x_i + \epsilon_i, ~~~~~ \epsilon_i \sim N(0, \sigma^2), ~~~~~ i = 1, ... , 14017
 $$
 
-Here, $y_i$ is the BMI group of the ith individual, $x_i$ is the age of the ith individual, and $\beta_0$, $\beta_1$ are regression coefficients
+Here, logit(obese) is the logit link function, $x_i$ is the age of the ith individual, and $\beta_0$, $\beta_1$ are regression coefficients
 
 ```{r}
 #| echo: false
@@ -111,7 +111,7 @@ model_age <- glm(BMIgroup ~ Age,
 
 tab_model(model_age, show.r2 = FALSE, show.obs = FALSE)
 ```
-As seen from the p-value, we can infer that age is a significant predictor for a persons BMI group. As someones age increases by one year, the log odds of the person being obese increase by a factor of 0.99. 
+As seen from the p-value, we can infer that age is a significant predictor for a persons BMI group. As someones age increases by one year, the odds of the person being obese increase by a factor of 0.99. 
 
 We now check the assumptions of our model, to find out if the model is valid.
 
@@ -127,7 +127,7 @@ There is no issues that can be seen in the posterior predictive check, influenti
 We now look at sex to consider if it is significant through fitting the following model:
 
 $$
-y_i = \beta_0 + \beta_1 x_i + \epsilon_i, ~~~~~ \epsilon_i \sim N(0, \sigma^2), ~~~~~ i = 1, ... , 14017
+logit(obese) = \beta_0 + \beta_1 x_i + \epsilon_i, ~~~~~ \epsilon_i \sim N(0, \sigma^2), ~~~~~ i = 1, ... , 14017
 $$
 
 Where $x_i$ is an indicator variable taking the value 1 if the individual is a male and the value 0 if the individual is a female.
@@ -181,7 +181,7 @@ model_edu <- glm(BMIgroup ~ Education,
 tab_model(model_edu, show.obs = F)
 ```
 
-As seen from table 3, all the levels of education are considered significant predictors of the persons BMI group. The log odds of a person being obese is 3.05 for a person with a degree, then increases by 0.53-0.84 depending on qualification level. 
+As seen from table 3, all the levels of education are considered significant predictors of the persons BMI group. The odds of a person being obese is 3.05 for a person with a degree, then increases by 0.53-0.84 depending on qualification level. 
 
 Again, we have to check the model assumptions. 
 
@@ -202,4 +202,4 @@ The interpretation of figure 3 is much like the previous figures. The only graph
 
 >>>>>>> Formal-Analysis-Q2
 
-From the previous tests, we have seen that age, sex, and education are all significant in the prediction of an individuals BMI group, indicating differences in obesity across these factors. As age increases, the log odds of obesity rise. Males have higher log odds of being obese than females, and lower education levels are associated with greater log odds of obesity.
+From the previous tests, we have seen that age, sex, and education are all significant in the prediction of an individuals BMI group, indicating differences in obesity across these factors. As age increases, the odds of obesity rise. Females have higher odds of being obese than males, and lower education levels are associated with greater odds of obesity.
