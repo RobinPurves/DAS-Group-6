@@ -401,6 +401,12 @@ AIC: 21.995
 Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 </div>
+<p>The analysis into whether the prevalence of obesity in Scotland has changed over the given years of the Scottish Health Survey includes a Chi-squared test for trend, Pearson’s Chi-squared test, and a logistic regression model.</p>
+<p>The Chi-squared test for trend examines whether there is a significant trend in obesity prevalence over the years. With a test statistic of X² = 0, df = 1, and a p-value of 1, this suggests no significant trend.</p>
+<p>The Pearson's Chi-squared test compares obesity proportions across years without assuming a trend. With X² = 0, df = 3, and p-value = 1, there is no significant difference in obesity prevalence across years.</p>
+<p>The logistic regression model tests whether the year is a significant predictor of obesity. The coefficient for year of -9.132e-16 is nearly zero, with a p-value of 1, indicating no relationship between year and obesity. The Intercept of -1.099 represents the log-odds of obesity in the baseline year.</p>
+<p>The Akaike Information Criterion (AIC = 21.995) measures model fit, with lower values indicating better fit. However, since the model finds no effect of year on obesity, this value is less meaningful in this case.</p>
+<p>Overall, all statistical tests confirm that obesity prevalence in Scotland has remained unchanged over the given years.</p>
 <section id="question-2" class="level3">
 <h3 class="anchored" data-anchor-id="question-2">Question 2</h3>
 <p>To answer the second question, we use linear regression to find out if age, gender, socio-economic status, or lifestyle factors are significant predictors for obesity.</p>

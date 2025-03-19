@@ -81,11 +81,6 @@ kable(summary_table, caption = "Summary Statistics of the Dataset") %>%
   kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover"))
 ```
 
-```{r}
-kable(summary_table, caption = "Summary Statistics of the Dataset") %>% 
-kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover"))
-```
-
 Key observations from the summary statistics:
 
 -   No missing values are detected.
@@ -105,25 +100,7 @@ ggplot(obesity, aes(x = Age)) +
   labs(title = "Histogram of Age Distribution", x = "Age", y = "Count")
 ```
 
-The histogram reveals that the age distribution in the dataset is approximately **bell-shaped** but slightly **right-skewed**. The majority of individuals fall within the **40-60 age range**, while younger individuals (\<20 years) and older individuals (\>80 years) are less represented. The right skew suggests that there are **more older individuals in the dataset than younger ones**. While the distribution is close to normal, further statistical tests such as a **Q-Q plot** can confirm normality.
-
-While the distribution is close to normal, further statistical tests such as a **Q-Q plot** can confirm normality.
-
-```{r}
-ggplot(obesity, aes(sample = Age)) +
-  stat_qq() +
-  stat_qq_line() +
-  theme_minimal() +
-  labs(title = "Q-Q Plot for Age Distribution", x = "Theoretical Quantiles", y = "Sample Quantiles")
-```
-
-The **Q-Q plot** provides further insights into the normality of the age distribution. Ideally, if the data follows a normal distribution, the points should closely follow the **diagonal reference line**. However, in the plot:
-
--   The points deviate from the **diagonal line at both tails**, suggesting that the age distribution has **heavy tails** and potential skewness.
-
--   The slight **concave shape** indicates a **right-skewed distribution**, aligning with what was observed in the histogram.
-
--   This suggests that the data may **not be perfectly normally distributed**, which could influence statistical modeling that assumes normality.
+The histogram reveals that the age distribution in the dataset is approximately **bell-shaped** but slightly **right-skewed**. The majority of individuals fall within the **40-60 age range**, while younger individuals (\<20 years) and older individuals (\>80 years) are less represented. The right skew suggests that there are **more older individuals in the dataset than younger ones**.
 
 ## Identifying outliers:
 
@@ -240,6 +217,8 @@ bmi_trends <- obesity%>% group_by(Year, BMIgroup) %>% summarise(count = n(), .gr
 "drop") %>% group_by(Year) %>% mutate(proportion = count / sum(count))
 
 ```
+
+The scatterplot illustrates the relationship between age and obesity, where obesity is represented as a binary variable (1= Obese, 0= Not obese). The distribution of points suggest that obesity is present across all ages groups without a strong visual trend. The calculated correlation coefficient of 0.099 indicates a very weak positive relationship, meaning that as age increases, there is only a slight tendency for obesity prevalence to rise.
 
 # Formal data analysis {#sec-formdata}
 
