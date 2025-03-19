@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Data analysis project 12</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="Data analysis 12 (1)_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Data analysis 12 (1)_files/libs/quarto-html/quarto.js"></script>
+<script src="Data analysis 12 (1)_files/libs/quarto-html/popper.min.js"></script>
+<script src="Data analysis 12 (1)_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Data analysis 12 (1)_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Data analysis 12 (1)_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Data analysis 12 (1)_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Data analysis 12 (1)_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Data analysis 12 (1)_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Data analysis 12 (1)_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+<script src="Data analysis 12 (1)_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="Data analysis 12 (1)_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Data analysis project 12</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 14,017
+Columns: 5
+$ Age       &lt;int&gt; 48, 51, 48, 16, 61, 40, 43, 40, 39, 45, 18, 29, 36, 37, 78, …
+$ Sex       &lt;chr&gt; "Female", "Male", "Female", "Female", "Male", "Female", "Mal…
+$ Education &lt;chr&gt; "No qualifications", "Degree or higher", "Degree or higher",…
+$ Year      &lt;int&gt; 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, …
+$ BMIgroup  &lt;chr&gt; "Obese", "Overweight", "Normal", "Normal", "Normal", "Normal…</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Age       Sex Education      Year  BMIgroup 
+        0         0         0         0         0 </code></pre>
+</div>
+</div>
+<section id="sec-intro" class="level1">
+<h1>Introduction</h1>
+<p>Over the years, there has been an increase in the health awareness of the Scottish population, with a fear that the country as a whole is becoming overweight. <strong>The body mass index (BMI)</strong> is a quick way to measure weight relative to height, and screen for people that are underweight, overweight, or obese.</p>
+<p>This report aims to explore <strong>changes in BMI trends in Scotland</strong> using data from the <strong>2013–2016 Scottish Health Survey</strong>. Specifically, we seek to answer the following key questions:</p>
+<ol type="1">
+<li><strong>Has the BMI in Scotland changed over the given years of the Scottish Health Survey?</strong></li>
+<li><strong>Are there any difference in the BMI distributions by age, gender, socio-economic status or lifestyle factors?</strong></li>
+</ol>
+<p>By analyzing this data, we aim to identify patterns that could inform public health strategies and address potential risk factors contributing to obesity.</p>
+</section>
+<section id="sec-expdata" class="level1">
+<h1>Exploratory data analysis</h1>
+<section id="data-overview" class="level2">
+<h2 class="anchored" data-anchor-id="data-overview">Data Overview</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>  Age    Sex               Education Year   BMIgroup
+1  48 Female       No qualifications 2016      Obese
+2  51   Male        Degree or higher 2016 Overweight
+3  48 Female        Degree or higher 2016     Normal
+4  16 Female       No qualifications 2016     Normal
+5  61   Male Standard grade or equiv 2016     Normal
+6  40 Female        Degree or higher 2016     Normal</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 14,017
+Columns: 5
+$ Age       &lt;int&gt; 48, 51, 48, 16, 61, 40, 43, 40, 39, 45, 18, 29, 36, 37, 78, …
+$ Sex       &lt;chr&gt; "Female", "Male", "Female", "Female", "Male", "Female", "Mal…
+$ Education &lt;chr&gt; "No qualifications", "Degree or higher", "Degree or higher",…
+$ Year      &lt;int&gt; 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, …
+$ BMIgroup  &lt;chr&gt; "Obese", "Overweight", "Normal", "Normal", "Normal", "Normal…</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Age       Sex Education      Year  BMIgroup 
+        0         0         0         0         0 </code></pre>
+</div>
+</div>
+<p>The dataset consists of 14,017 observations with the following columns:</p>
+<p><strong>Age</strong>: Age of individuals</p>
+<p><strong>Sex</strong>: Gender of individuals (Male/Female)</p>
+<p><strong>Education</strong>: Highest educational qualification</p>
+<p><strong>Year</strong>: Year of the survey (2013-2016)</p>
+<p><strong>BMIgroup</strong>: Weight classification group (e.g., Obese, Overweight, Normal)</p>
+</section>
+<section id="summary-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="summary-statistics">Summary Statistics</h2>
+<p>Computing descriptive statistics helps understand the distribution of the data.</p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Summary Statistics of the Dataset</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> Sample_Size </th>
+   <th style="text-align:right;"> Mean_Age </th>
+   <th style="text-align:right;"> Median_Age </th>
+   <th style="text-align:right;"> Min_Age </th>
+   <th style="text-align:right;"> Q1_Age </th>
+   <th style="text-align:right;"> Q3_Age </th>
+   <th style="text-align:right;"> Max_Age </th>
+   <th style="text-align:right;"> Std_Age </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 14017 </td>
+   <td style="text-align:right;"> 50.84262 </td>
+   <td style="text-align:right;"> 51 </td>
+   <td style="text-align:right;"> 16 </td>
+   <td style="text-align:right;"> 37 </td>
+   <td style="text-align:right;"> 65 </td>
+   <td style="text-align:right;"> 99 </td>
+   <td style="text-align:right;"> 17.60925 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table table-striped table-hover" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>Summary Statistics of the Dataset</caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> Sample_Size </th>
+   <th style="text-align:right;"> Mean_Age </th>
+   <th style="text-align:right;"> Median_Age </th>
+   <th style="text-align:right;"> Min_Age </th>
+   <th style="text-align:right;"> Q1_Age </th>
+   <th style="text-align:right;"> Q3_Age </th>
+   <th style="text-align:right;"> Max_Age </th>
+   <th style="text-align:right;"> Std_Age </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 14017 </td>
+   <td style="text-align:right;"> 50.84262 </td>
+   <td style="text-align:right;"> 51 </td>
+   <td style="text-align:right;"> 16 </td>
+   <td style="text-align:right;"> 37 </td>
+   <td style="text-align:right;"> 65 </td>
+   <td style="text-align:right;"> 99 </td>
+   <td style="text-align:right;"> 17.60925 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>Key observations from the summary statistics:</p>
+<ul>
+<li><p>No missing values are detected.</p></li>
+<li><p>Age distribution is fairly wide, with a range from young adults to elderly individuals.</p></li>
+<li><p>BMI categories contain multiple classifications, which will later be converted into a binary variable for analysis.</p></li>
+</ul>
+</section>
+<section id="identifying-distribution-and-checking-normality" class="level2">
+<h2 class="anchored" data-anchor-id="identifying-distribution-and-checking-normality">Identifying Distribution and Checking Normality</h2>
+<p>We use a histogram to visualize the distribution of age and assess normality.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Data-analysis-12--1-_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The histogram reveals that the age distribution in the dataset is approximately&nbsp;<strong>bell-shaped</strong>&nbsp;but slightly&nbsp;<strong>right-skewed</strong>. The majority of individuals fall within the&nbsp;<strong>40-60 age range</strong>, while younger individuals (&lt;20 years) and older individuals (&gt;80 years) are less represented. The right skew suggests that there are&nbsp;<strong>more older individuals in the dataset than younger ones</strong>. While the distribution is close to normal, further statistical tests such as a&nbsp;<strong>Q-Q plot</strong>&nbsp;can confirm normality.</p>
+<p>While the distribution is close to normal, further statistical tests such as a&nbsp;<strong>Q-Q plot</strong>&nbsp;can confirm normality.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Data-analysis-12--1-_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The&nbsp;<strong>Q-Q plot</strong>&nbsp;provides further insights into the normality of the age distribution. Ideally, if the data follows a normal distribution, the points should closely follow the&nbsp;<strong>diagonal reference line</strong>. However, in the plot:</p>
+<ul>
+<li><p>The points deviate from the&nbsp;<strong>diagonal line at both tails</strong>, suggesting that the age distribution has&nbsp;<strong>heavy tails</strong>&nbsp;and potential skewness.</p></li>
+<li><p>The slight&nbsp;<strong>concave shape</strong>&nbsp;indicates a&nbsp;<strong>right-skewed distribution</strong>, aligning with what was observed in the histogram.</p></li>
+<li><p>This suggests that the data may&nbsp;<strong>not be perfectly normally distributed</strong>, which could influence statistical modeling that assumes normality.</p></li>
+</ul>
+</section>
+<section id="identifying-outliers" class="level2">
+<h2 class="anchored" data-anchor-id="identifying-outliers">Identifying outliers:</h2>
+<p>To detect outliers, we use a&nbsp;<strong>boxplot</strong>&nbsp;to visualize the spread of ages within each&nbsp;</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Data-analysis-12--1-_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The boxplot provides a visual summary of the distribution of&nbsp;<strong>age across different BMI categories (Normal, Obese, Overweight, and Underweight)</strong>. Key observations include:</p>
+<ul>
+<li><p>The&nbsp;<strong>median age varies slightly across BMI groups</strong>, with individuals classified as overweight and obese tending to be older than those in the normal or underweight categories.</p></li>
+<li><p>The&nbsp;<strong>interquartile range (IQR)</strong>&nbsp;(middle 50% of the data) shows that most individuals are between&nbsp;<strong>40 and 70 years old</strong>, regardless of BMI classification.</p></li>
+<li><p>There are&nbsp;<strong>potential outliers</strong>, particularly among&nbsp;<strong>younger and older individuals</strong>, indicating that some individuals outside the usual age range may require further investigation.</p></li>
+</ul>
+</section>
+<section id="creating-a-binary-obesity-classification" class="level2">
+<h2 class="anchored" data-anchor-id="creating-a-binary-obesity-classification">Creating a Binary Obesity Classification</h2>
+<p>Since we want to analyze obesity prevalence, we create a new binary response variable where:</p>
+<ul>
+<li><p>Obese = 1</p></li>
+<li><p>Not Obese (Normal &amp; Overweight) = 0</p></li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+   0    1 
+9754 4263 </code></pre>
+</div>
+</div>
+</section>
+<section id="bmi-trends-over-time" class="level2">
+<h2 class="anchored" data-anchor-id="bmi-trends-over-time">BMI Trends Over Time</h2>
+<p>Analyzing how obesity has changed over time using proportions.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Data-analysis-12--1-_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Key findings:</p>
+<ul>
+<li><p>The proportion of obese individuals appears relatively stable over the years.</p></li>
+<li><p>A significant proportion of individuals are classified as overweight.</p></li>
+</ul>
+</section>
+<section id="obesity-distribution-by-demographics" class="level2">
+<h2 class="anchored" data-anchor-id="obesity-distribution-by-demographics">Obesity Distribution by Demographics</h2>
+<section id="by-age-group" class="level3">
+<h3 class="anchored" data-anchor-id="by-age-group">By Age Group</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Data-analysis-12--1-_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li>Middle-aged individuals (45-60) have the highest obesity rates.</li>
+</ul>
+</section>
+<section id="by-gender" class="level3">
+<h3 class="anchored" data-anchor-id="by-gender">By Gender</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Data-analysis-12--1-_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li>Females exhibit higher obesity rates compared to males.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="correlation-analysis" class="level1">
+<h1>Correlation Analysis</h1>
+<p>Examining the relationship between <strong>Age</strong> and <strong>Obesity</strong>.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  obesity$Age and obesity$ObeseBinary
+t = 11.804, df = 14015, p-value &lt; 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.08279939 0.11558340
+sample estimates:
+       cor 
+0.09921832 </code></pre>
+</div>
+</div>
+<p>The correlation is 0.099 which is suggesting a weak linear relationship # Age vs.&nbsp;Obesity</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="Data-analysis-12--1-_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+
+</div>
+</section>
+<section id="sec-formdata" class="level1">
+<h1>Formal data analysis</h1>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Year</th>
+<th>Obese proportions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2013</td>
+<td>0.30300569</td>
+</tr>
+<tr class="even">
+<td>2014</td>
+<td>0.30181715</td>
+</tr>
+<tr class="odd">
+<td>2015</td>
+<td>0.30645161</td>
+</tr>
+<tr class="even">
+<td>2016</td>
+<td>0.30536494</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>      
+       0 1
+  2013 3 1
+  2014 3 1
+  2015 3 1
+  2016 3 1</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Chi-squared Test for Trend in Proportions
+
+data:  trend_table[, 2] out of rowSums(trend_table) ,
+ using scores: 1 2 3 4
+X-squared = 0, df = 1, p-value = 1</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2013 2014 2015 2016</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0 1</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test
+
+data:  trend_table
+X-squared = 0, df = 3, p-value = 1</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = obese_binary ~ as.numeric(Year), family = binomial, 
+    data = bmi_trends)
+
+Coefficients:
+                   Estimate Std. Error z value Pr(&gt;|z|)
+(Intercept)      -1.099e+00  1.414e+00  -0.777    0.437
+as.numeric(Year) -9.132e-16  5.164e-01   0.000    1.000
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 17.995  on 15  degrees of freedom
+Residual deviance: 17.995  on 14  degrees of freedom
+AIC: 21.995
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<section id="question-2" class="level3">
+<h3 class="anchored" data-anchor-id="question-2">Question 2</h3>
+<p>To answer the second question, we use linear regression to find out if age, gender, socio-economic status, or lifestyle factors are significant predictors for obesity.</p>
+<p>We start by looking at if age is a significant predictor.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 7
+  term        estimate std.error statistic   p.value conf.low conf.high
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)  -1.47     0.0583      -25.1 2.12e-139  -1.58     -1.35  
+2 Age           0.0124   0.00106      11.7 1.29e- 31   0.0103    0.0144</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Overdispersion test
+
+ dispersion ratio = 1.001
+          p-value = 0.888</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>No overdispersion detected.</code></pre>
+</div>
+</div>
+<p>We now look at sex to consider if it is significant</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 7
+  term        estimate std.error statistic   p.value conf.low conf.high
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)   -0.779    0.0244    -31.9  6.84e-224   -0.826   -0.731 
+2 SexMale       -0.112    0.0371     -3.03 2.46e-  3   -0.185   -0.0397</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Overdispersion test
+
+ dispersion ratio = 1.000
+          p-value =     1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>No overdispersion detected.</code></pre>
+</div>
+</div>
+<p>We now look at education to consider if there is a difference in obesity based on socio-economic factors</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  term                 estimate std.error statistic   p.value conf.low conf.high
+  &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)            -1.11     0.0349    -32.0  4.21e-224  -1.18      -1.05 
+2 EducationHigher gra…    0.178    0.0590      3.02 2.56e-  3   0.0620     0.293
+3 EducationHNC/D or e…    0.329    0.0631      5.21 1.90e-  7   0.205      0.452
+4 EducationNo qualifi…    0.632    0.0549     11.5  1.34e- 30   0.524      0.739
+5 EducationOther scho…    0.518    0.0833      6.22 5.13e- 10   0.354      0.680
+6 EducationStandard g…    0.401    0.0543      7.39 1.49e- 13   0.295      0.508</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Overdispersion test
+
+ dispersion ratio = 1.001
+          p-value = 0.968</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>No overdispersion detected.</code></pre>
+</div>
+</div>
+</section>
+<section id="sec-results" class="level2">
+<h2 class="anchored" data-anchor-id="sec-results">Results</h2>
+</section>
+</section>
+<section id="sec-conc" class="level1">
+<h1>Conclusions</h1>
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<blockquote class="blockquote">
+<p>Formal-Analysis-Q2</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
