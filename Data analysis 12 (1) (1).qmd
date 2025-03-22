@@ -1,5 +1,11 @@
 ---
-title: "Data analysis project 12"
+title: "\\Analysis of Obesity Prevalence and Influencing Factors in the 2013–2016 Scottish Health Surveys"
+subtitle: Group 6
+author:
+- Amina Rage (2652872R),
+- Robin Purves (2763403P), 
+- Yassmine Boukhobezaa (2796790B),
+- Yu Zhao (2724171Z)
 format: html
 editor: visual
 execute: 
@@ -13,17 +19,27 @@ execute:
 
 library(dplyr)
 library(ggplot2) 
-library(tidyverse)
-library(tidymodels)
 library(performance)
 library(tinytex)
-library(skimr)
 library(kableExtra)
+library(tidyverse)
+library(tidymodels)
+library(gt)
+library(MASS)
+library(patchwork)
+library(moderndive)
+library(gapminder)
 library(sjPlot)
+library(stats)
+library(readr)
+library(janitor)
+library(ggstats)
+library(skimr)
 
 
-obesity <- read.csv("DAProject12.csv")
+obesity <- read.csv("C:/Users/86173/OneDrive - University of Glasgow/666/DAS-Group-6/DAProject12.csv")
 BMI <- obesity
+
 ```
 
 # Introduction {#sec-intro}
@@ -270,7 +286,7 @@ Overall, all statistical tests confirm that obesity prevalence in Scotland has r
 
 To answer the second question, we use linear regression to find out if age, gender, socio-economic status, or lifestyle factors are significant predictors for obesity.
 
-We start by looking at if age is a significant predictor for a persons BMI group. We are fitting the following linear model: 
+We start by looking at if age is a significant predictor for a persons BMI group. We are fitting the following linear model:
 
 $$
 logit(\pi) = \beta_0 + \beta_1 x_i + \epsilon_i, ~~~~~ \epsilon_i \sim N(0, \sigma^2), ~~~~~ i = 1, ... , 14017
@@ -299,18 +315,20 @@ model_age <- glm(BMIgroup ~ Age,
 
 tab_model(model_age, show.r2 = FALSE, show.obs = FALSE)
 ```
-As seen from the p-value, we can infer that age is a significant predictor for a persons BMI group. As someones age increases by one year, the odds of the person being obese increase by a factor of 0.99. 
+
+As seen from the p-value, we can infer that age is a significant predictor for a persons BMI group. As someones age increases by one year, the odds of the person being obese increase by a factor of 0.99.
 
 We now check the assumptions of our model, to find out if the model is valid.
 
-``` {r}
+```{r}
 #| label: fig-diagnostics1
 #| fig-cap: Diagnostic plots for the age model
 
 # Model diagnostics
 check_model(model_age, panel = TRUE)
 ```
-There is no issues that can be seen in the posterior predictive check, influential obesvations graph, and the uniformity of resuduals graph. There does appear to be a large amount of points falling outiwth the error bounds in the binned residuals graph. We would expect about 95% of points to fall within the error bounds if the model is true. As there is a large amount of points plotted it is hard to tell if there is 95% within the error bounds, as there may be overlap. However, it appears to be good enough. 
+
+There is no issues that can be seen in the posterior predictive check, influential obesvations graph, and the uniformity of resuduals graph. There does appear to be a large amount of points falling outiwth the error bounds in the binned residuals graph. We would expect about 95% of points to fall within the error bounds if the model is true. As there is a large amount of points plotted it is hard to tell if there is 95% within the error bounds, as there may be overlap. However, it appears to be good enough.
 
 We now look at sex to consider if it is significant through fitting the following model:
 
@@ -349,14 +367,14 @@ Again, we check our model assumptions to find out if our results are valid.
 # Model diagnostics
 check_model(model_sex, panel = TRUE)
 ```
+
 The plots in figure 2 look good enough. There may be issues with the binned residuals plot, however the issue likely stems from sex being a factor with 2 levels giving us only 2 points.
 
-We now look at education to consider if there is a difference in obesity based on socio-economic factors. We fit the following model: 
+We now look at education to consider if there is a difference in obesity based on socio-economic factors. We fit the following model:
 
 $$
 logit(\pi) = \beta_0 + \beta_1 x_i + \beta_2 x_j + \beta_3 x_k + \beta_4 x_l +\beta_5 x_m + \beta_6 x_n + \epsilon_i, ~~~~~ \epsilon_i \sim N(0, \sigma^2), ~~~~~ i = 1, ... , 14017
-$$
-Where $x_i$ through $x_n$ are indicator variables taking the value 1 if they have that level of education and 0 if they do not. The $\beta_0$ term refers to the referrence level which is having a degree.
+$$ Where $x_i$ through $x_n$ are indicator variables taking the value 1 if they have that level of education and 0 if they do not. The $\beta_0$ term refers to the referrence level which is having a degree.
 
 ```{r}
 #| echo: false
@@ -374,9 +392,9 @@ model_edu <- glm(BMIgroup ~ Education,
 tab_model(model_edu, show.obs = F)
 ```
 
-As seen from table 3, all the levels of education are considered significant predictors of the persons BMI group. The odds of a person being obese is 3.05 for a person with a degree, then increases by 0.53-0.84 depending on qualification level. 
+As seen from table 3, all the levels of education are considered significant predictors of the persons BMI group. The odds of a person being obese is 3.05 for a person with a degree, then increases by 0.53-0.84 depending on qualification level.
 
-Again, we have to check the model assumptions. 
+Again, we have to check the model assumptions.
 
 ```{r}
 #| label: fig-diagnostics3
