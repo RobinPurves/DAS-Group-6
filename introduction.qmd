@@ -40,7 +40,14 @@ BMI <- obesity
 
 # Introduction {#sec-intro}
 
-Obesity has become a significant public health concern in Scotland, raising worries about the rising burden of chronic diseases and healthcare costs. The 2013–2016 Scottish Health Surveys provide valuable insights into socio-economic and lifestyle factors that may influence obesity prevalence, including age, sex, education, and survey year. This project seeks to determine whether the prevalence of obesity has changed over time and to explore how demographic and socio-economic factors relate to weight classification. By analyzing these trends, we can gain a deeper understanding of the drivers behind obesity and inform targeted public health interventions.
+Over the years, there has been an increase in the health awareness of the Scottish population, with a fear that the country as a whole is becoming overweight. The body mass index (BMI) is a quick way to measure weight relative to height, and screen for people that are underweight, overweight, or obese.
+
+This report aims to explore changes in BMI trends in Scotland using data from the 2013--2016 Scottish Health Survey. Specifically, we seek to answer the following key questions:
+
+1.  Has the BMI in Scotland changed over the given years of the Scottish Health Survey?
+2.  Are there any difference inthe BMI distributions by age, gender, socioeconomic status or lifestyle factors?
+
+By analyzing this data, we aim to identify patterns that could inform public health strategies and address potential risk factors contributing to obesity.
 
 # Exploratory data analysis {#sec-expdata}
 
