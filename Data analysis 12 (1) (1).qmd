@@ -195,7 +195,8 @@ We now check the assumptions of our model, to find out if the model is valid.
 ```{r}
 #| label: fig-diagnostics1
 #| fig-cap: Diagnostic plots for the age model
-#| fig-height: 3
+#| fig-height: 5
+#| fig-width: 8
 
 # Model diagnostics
 check_model(model_age, panel = TRUE)
@@ -236,7 +237,8 @@ Again, we check our model assumptions to find out if our results are valid.
 ```{r}
 #| label: fig-diagnostics2
 #| fig-cap: Diagnostic plots for the sex model
-#| fig-height: 3
+#| fig-height: 5
+#| fig-width: 8
 
 # Model diagnostics
 check_model(model_sex, panel = TRUE)
@@ -273,7 +275,8 @@ Again, we have to check the model assumptions.
 ```{r}
 #| label: fig-diagnostics3
 #| fig-cap: Diagnostic plots for the education model
-#| fig-height: 3
+#| fig-height: 5
+#| fig-width: 8
 
 # Model diagnostics
 check_model(model_edu, panel = TRUE)
