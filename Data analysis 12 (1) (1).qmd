@@ -1,11 +1,7 @@
 ---
 title: "\\Analysis of Obesity Prevalence and Influencing Factors in the 2013–2016 Scottish Health Surveys"
 subtitle: Group 6
-author:
-- Amina Rage (2652872R),
-- Robin Purves (2763403P), 
-- Yassmine Boukhobezaa (2796790B),
-- Yu Zhao (2724171Z)
+author: Amina Rage (2652872R), Robin Purves (2763403P), Yassmine Boukhobezaa (2796790B), Yu Zhao (2724171Z)
 format: html
 editor: visual
 execute: 
@@ -37,7 +33,7 @@ library(ggstats)
 library(skimr)
 
 
-obesity <- read.csv("C:/Users/86173/OneDrive - University of Glasgow/666/DAS-Group-6/DAProject12.csv")
+obesity <- read.csv("DAProject12.csv")
 BMI <- obesity
 
 ```
@@ -75,6 +71,7 @@ Next, we want to explore the relationship between Age and BMIgroup.In @fig-box1 
 #| warning: false
 #| fig-cap: "Box plot showing the relationship between Age and BMIgroup"
 #| label: fig-box1
+#| fig-height: 3
 
 boxplot(Age ~ BMIgroup, data = obesity,
         main = "Age Distribution by BMI Group",
@@ -100,7 +97,8 @@ Finally, we want to assess the relationship between Education and BMIgroup. In @
 #| warning: false
 #| fig-cap: Bar plot showing the relationship between Education and BMIgroup
 #| label: fig-bar3
-#| fig-height: 2
+#| fig-height: 3
+
 ggplot(obesity, aes(x = Education, fill = BMIgroup)) +
   geom_bar(position = "fill") +
   labs(title = "BMI Group Proportion by Education", x = "Education", y = "Proportion") +
@@ -111,15 +109,8 @@ ggplot(obesity, aes(x = Education, fill = BMIgroup)) +
 
 # Formal data analysis {#sec-formdata}
 
-| Year | Obese proportions |
-|------|-------------------|
-| 2013 | 0.30300569        |
-| 2014 | 0.30181715        |
-| 2015 | 0.30645161        |
-| 2016 | 0.30536494        |
-
 ```{r}
-bmi_trends <- bmi_trends %>%
+bmi_trends <- BMI %>%
   mutate(obese_binary = ifelse(BMIgroup == "Obese", 1, 0))
 
 ```
@@ -127,10 +118,11 @@ bmi_trends <- bmi_trends %>%
 ```{r}
 #| echo: false
 #| warning: false
+#| eval: false
 bmi_trends$BMIgroup<-as.factor(bmi_trends$BMIgroup)
 levels(bmi_trends$BMIgroup)<-c("Not Obese","Obese","Not Obese","Not Obese")
 trend_table <- table(bmi_trends$Year, bmi_trends$obese_binary)
-head(trend_table)
+
 prop.trend.test(x = trend_table[,2],  
                 n = rowSums(trend_table))  
 unique(bmi_trends$Year)
@@ -140,9 +132,13 @@ chisq.test(trend_table)
 ```
 
 ```{r}
+#| tab-cap: "output to check if obesity changes over year"
+#| label: tab-amina1
+#| message: false
+
 glm_model <- glm(obese_binary ~ as.numeric(Year), 
                  data = bmi_trends, family = binomial)
-summary(glm_model)
+tab_model(glm_model, show.r2 = FALSE, show.obs = FALSE)
 
 ```
 
@@ -173,7 +169,7 @@ Here, $\pi$ is the probability that the individual is obese, $x_i$ is the age of
 ```{r}
 #| echo: false
 #| eval: true
-#| tab-cap: output from linear regression with age as the predictor
+#| tab-cap: "output from linear regression with age as the predictor"
 #| label: tab-regression1
 #| warnings: false
 #| message: false
@@ -199,6 +195,7 @@ We now check the assumptions of our model, to find out if the model is valid.
 ```{r}
 #| label: fig-diagnostics1
 #| fig-cap: Diagnostic plots for the age model
+#| fig-height: 3
 
 # Model diagnostics
 check_model(model_age, panel = TRUE)
@@ -217,7 +214,7 @@ Where $x_i$ is an indicator variable taking the value 0 if the individual is a m
 ```{r}
 #| echo: false
 #| eval: true
-#| tab-cap: output from linear regression with sex as the predictor
+#| tab-cap: "output from linear regression with sex as the predictor"
 #| label: tab-regression2
 #| warnings: false
 #| message: false
@@ -229,7 +226,7 @@ model_sex <- glm(BMIgroup ~ Sex,
                      data = BMI,
                      family = binomial)
                      
-tab_model(model_sex, show.obs = FALSE)
+tab_model(model_sex, show.r2 = FALSE, show.obs = FALSE)
 ```
 
 As seen from table 2, the p-value indicates that sex is a significant predictor at the 5% significance level. Furthermore, the odds ratio for being obese increase by 0.89 for females.
@@ -239,6 +236,7 @@ Again, we check our model assumptions to find out if our results are valid.
 ```{r}
 #| label: fig-diagnostics2
 #| fig-cap: Diagnostic plots for the sex model
+#| fig-height: 3
 
 # Model diagnostics
 check_model(model_sex, panel = TRUE)
@@ -255,7 +253,7 @@ $$ Where $x_i$ through $x_n$ are indicator variables taking the value 1 if they 
 ```{r}
 #| echo: false
 #| eval: true
-#| tab-cap: output from linear regression with education as the predictor
+#| tab-cap: "output from linear regression with education as the predictor"
 #| label: tab-regression3
 #| warnings: false
 #| message: false
@@ -265,7 +263,7 @@ model_edu <- glm(BMIgroup ~ Education,
                      data = BMI,
                      family = binomial)
 
-tab_model(model_edu, show.obs = F)
+tab_model(model_edu, show.r2 = FALSE, show.obs = FALSE)
 ```
 
 As seen from table 3, all the levels of education are considered significant predictors of the persons BMI group. The odds of a person being obese is 3.05 for a person with a degree, then increases by 0.53-0.84 depending on qualification level.
@@ -275,6 +273,7 @@ Again, we have to check the model assumptions.
 ```{r}
 #| label: fig-diagnostics3
 #| fig-cap: Diagnostic plots for the education model
+#| fig-height: 3
 
 # Model diagnostics
 check_model(model_edu, panel = TRUE)
