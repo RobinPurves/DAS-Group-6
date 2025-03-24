@@ -1,5 +1,7 @@
 ---
-title: "Data analysis project 12"
+title: "\\Analysis of Obesity Prevalence and Influencing Factors in the 2013–2016 Scottish Health Surveys"
+subtitle: Group 6
+author: Amina Rage (2652872R), Robin Purves (2763403P), Yassmine Boukhobezaa (2796790B), Yu Zhao (2724171Z)
 format: html
 editor: visual
 execute: 
@@ -7,17 +9,21 @@ execute:
 ---
 
 ```{r}
+#| echo: false
 #| warning: false
 #| message: false
 
-library(ggplot2)
+library(dplyr)
+library(ggplot2) 
+library(performance)
+library(tinytex)
+library(kableExtra)
 library(tidyverse)
 library(tidymodels)
 library(gt)
 library(MASS)
 library(patchwork)
 library(moderndive)
-library(dplyr)
 library(gapminder)
 library(sjPlot)
 library(stats)
@@ -25,26 +31,16 @@ library(readr)
 library(janitor)
 library(ggstats)
 library(skimr)
-library(knitr)
-```
 
-```{r}
-#| warning: false
-#| message: false
 
-data1 <- read.csv("D:/1332/DAProject12.csv")
+obesity <- read.csv("DAProject12.csv")
+BMI <- obesity
 
 ```
+
 # Introduction {#sec-intro}
-Obesity is a growing public health concern worldwide, and Scotland is no exception. With lifestyle, socio-economic, and demographic factors playing crucial roles in obesity prevalence, it is important to analyze trends and patterns over time. This study utilizes data from the Scottish Health Surveys (2013-2016) to explore the distribution of obesity and its relationship with age, sex, education, and other lifestyle factors.
 
-The primary objectives of this analysis are:
-
-1.To examine how the prevalence of obesity has changed from 2013 to 2016.
-
-2.To investigate whether there are differences in obesity rates based on age, gender, socio-economic status, or educational attainment.
-
-3.By understanding these trends, policymakers and health professionals can better address obesity-related health issues and develop targeted interventions to promote healthier lifestyles in Scotland.
+Obesity has become a significant public health concern in Scotland, raising worries about the rising burden of chronic diseases and healthcare costs. The 2013–2016 Scottish Health Surveys provide valuable insights into socio-economic and lifestyle factors that may influence obesity prevalence, including age, sex, education, and survey year. This project seeks to determine whether the prevalence of obesity has changed over time and to explore how demographic and socio-economic factors relate to weight classification. By analyzing these trends, we can gain a deeper understanding of the drivers behind obesity and inform targeted public health interventions.
 
 # Exploratory data analysis {#sec-expdata}
 
@@ -56,7 +52,7 @@ These statistics can be illustrated in @fig-bar1 below. We can also see that the
 #| fig-cap: bar plot of BMIgroup by year
 #| label: fig-bar1
 #| fig-height: 2
-ggplot(data1, aes(x = factor(Year), fill = BMIgroup)) +
+ggplot(obesity, aes(x = factor(Year), fill = BMIgroup)) +
   geom_bar(position = "fill") +
   labs(title = "BMI Group Proportion by Year", x = "Year", y = "Proportion") +
   theme_minimal()
@@ -69,33 +65,39 @@ Next, we want to explore the relationship between Age and BMIgroup.In @fig-box1 
 #| warning: false
 #| fig-cap: "Box plot showing the relationship between Age and BMIgroup"
 #| label: fig-box1
+#| fig-height: 3
 
-boxplot(Age ~ BMIgroup, data = data1,
+boxplot(Age ~ BMIgroup, data = obesity,
         main = "Age Distribution by BMI Group",
         xlab = "BMI Group",
         ylab = "Age")
 
 ```
+
 Next, we analyse the relationship between BMI Group Proportion by Sex. In @fig-bar2 we see there are noticeable differences in BMI group proportions between males and females. Males appear slightly more likely to be overweight, whereas females show relatively higher proportions in the normal and obese categories. Gender thus influences BMI distribution patterns.
+
 ```{r}
 #| echo: false
 #| warning: false
 #| fig-cap: Bar plot showing the relationship between Sex and BMIgroup
 #| label: fig-bar2
 #| fig-height: 2
-ggplot(data1, aes(x = Sex, fill = BMIgroup)) +
+ggplot(obesity, aes(x = Sex, fill = BMIgroup)) +
   geom_bar(position = "fill") +
   labs(title = "BMI Group Proportion by Sex", x = "Sex", y = "Proportion") +
   theme_minimal()
 ```
+
 Finally, we want to assess the relationship between Education and BMIgroup. In @fig-bar3 shows that the education level is related to BMI groups. Individuals with higher educational qualifications generally have higher proportions of normal weight and lower proportions of obesity. Conversely, individuals with fewer or no qualifications show a greater proportion of obesity. Socio-economic factors, represented by education levels, clearly impact obesity rates.
+
 ```{r}
 #| echo: false
 #| warning: false
 #| fig-cap: Bar plot showing the relationship between Education and BMIgroup
 #| label: fig-bar3
-#| fig-height: 2
-ggplot(data1, aes(x = Education, fill = BMIgroup)) +
+#| fig-height: 3
+
+ggplot(obesity, aes(x = Education, fill = BMIgroup)) +
   geom_bar(position = "fill") +
   labs(title = "BMI Group Proportion by Education", x = "Education", y = "Proportion") +
   theme_minimal() +
