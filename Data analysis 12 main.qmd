@@ -280,10 +280,14 @@ check_model(model_edu, panel = TRUE)
 
 The interpretation of figure 3 is much like the previous figures. The only graph that leaves cause for concern is the binned residuals graph, but again, because it is a factor, it is always going to not work as well as a continuous variable. Thus, the model is appropriate.
 
-## Results {#sec-results}
-
 # Conclusions {#sec-conc}
 
-> > > > > > > Formal-Analysis-Q2
+The analysis of the Scottish Health Survey data suggests that there has been no significant change in obesity prevalence in Scotland between 2013 and 2016, as indicated by the stable proportion of BMI groups over time.Furthermore, demographic and socio-economic factors appear to play a role in obesity distribution:
 
-From the previous tests, we have seen that age, sex, and education are all significant in the prediction of an individuals BMI group, indicating differences in obesity across these factors. As age increases, the odds of obesity rise. Females have higher odds of being obese than males, and lower education levels are associated with greater odds of obesity.
+-   Older individuals are more likely to be classified as obese, while younger individuals are more frequently found in the underweight category
+
+-   Males tend to have a higher proportion of overweight individuals, whereas females exhibit relatively greater proportions in the normal and obese BMI categories.
+
+-    Higher educational qualifications are associated with a lower prevalence of obesity, whereas individuals with fewer or no qualifications tend to have a higher proportion of obesity.
+
+These findings suggest that while overall obesity rates have remained stable, socio-demographic factors such as age, gender, and education level significantly influence obesity.
