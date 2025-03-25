@@ -1,5 +1,5 @@
 ---
-title: "\\Analysis of Obesity Prevalence and Influencing Factors in the 2013–2016 Scottish Health Surveys"
+title: "Analysis of Obesity Prevalence and Influencing Factors in the 2013–2016 Scottish Health Surveys"
 subtitle: Group 6
 author: Amina Rage (2652872R), Robin Purves (2763403P), Yassmine Boukhobezaa (2796790B), Yu Zhao (2724171Z)
 format: html
