@@ -1,5 +1,7 @@
 ---
-title: "Data analysis project 12"
+title: "\\Analysis of Obesity Prevalence and Influencing Factors in the 2013–2016 Scottish Health Surveys"
+subtitle: Group 6
+author: Amina Rage (2652872R), Robin Purves (2763403P), Yassmine Boukhobezaa (2796790B), Yu Zhao (2724171Z)
 format: html
 editor: visual
 execute: 
@@ -13,16 +15,27 @@ execute:
 
 library(dplyr)
 library(ggplot2) 
-library(tidyverse)
-library(tidymodels)
 library(performance)
 library(tinytex)
-library(skimr)
 library(kableExtra)
+library(tidyverse)
+library(tidymodels)
+library(gt)
+library(MASS)
+library(patchwork)
+library(moderndive)
+library(gapminder)
+library(sjPlot)
+library(stats)
+library(readr)
+library(janitor)
+library(ggstats)
+library(skimr)
 
 
-obesity <- read.csv("~/Downloads/DAProject12.csv")
+obesity <- read.csv("DAProject12.csv")
 BMI <- obesity
+
 ```
 
 # Introduction {#sec-intro}
@@ -37,196 +50,67 @@ This report aims to explore changes in BMI trends in Scotland using data from th
 By analyzing this data, we aim to identify patterns that could inform public health strategies and address potential risk factors contributing to obesity.
 
 # Exploratory data analysis {#sec-expdata}
-
-## Data Overview
+These statistics can be illustrated in @fig-bar1 below. We can also see that there are no significant change in the proportion of obese individuals between 2013 and 2016.
 
 ```{r}
-head(obesity)
-glimpse(obesity)
-colSums(is.na(obesity))
+#| echo: false
+#| warning: false
+#| fig-cap: bar plot of BMIgroup by year
+#| label: fig-bar1
+#| fig-height: 2
+ggplot(obesity, aes(x = factor(Year), fill = BMIgroup)) +
+  geom_bar(position = "fill") +
+  labs(title = "BMI Group Proportion by Year", x = "Year", y = "Proportion") +
+  theme_minimal()
 ```
 
-The dataset consists of 14,017 observations with the following columns:
-
-**Age**: Age of individuals
-
-**Sex**: Gender of individuals (Male/Female)
-
-**Education**: Highest educational qualification
-
-**Year**: Year of the survey (2013-2016)
-
-**BMIgroup**: Weight classification group (e.g., Obese, Overweight, Normal)
-
-## Summary Statistics
-
-Computing descriptive statistics helps understand the distribution of the data.
+Next, we want to explore the relationship between Age and BMIgroup.In @fig-box1 shows that the age distribution varies significantly across different BMI groups. Generally, obese individuals tend to be older, whereas the underweight group is comparatively younger. This indicates age is an important factor associated with BMI categories.
 
 ```{r}
-summary_table <- obesity %>% 
-  summarise(
-    Sample_Size = n(),
-    Mean_Age = mean(Age, na.rm = TRUE),
-    Median_Age = median(Age, na.rm = TRUE),
-    Min_Age = min(Age, na.rm = TRUE),
-    Q1_Age = quantile(Age, 0.25, na.rm = TRUE),
-    Q3_Age = quantile(Age, 0.75, na.rm = TRUE),
-    Max_Age = max(Age, na.rm = TRUE),
-    Std_Age = sd(Age, na.rm = TRUE)
-  )
+#| echo: false
+#| warning: false
+#| fig-cap: "Box plot showing the relationship between Age and BMIgroup"
+#| label: fig-box1
+#| fig-height: 3
 
-kable(summary_table, caption = "Summary Statistics of the Dataset") %>% 
-  kable_styling(full_width = FALSE, bootstrap_options = c("striped", "hover"))
+boxplot(Age ~ BMIgroup, data = obesity,
+        main = "Age Distribution by BMI Group",
+        xlab = "BMI Group",
+        ylab = "Age")
+
 ```
-
-Key observations from the summary statistics:
-
--   No missing values are detected.
-
--   Age distribution is fairly wide, with a range from young adults to elderly individuals.
-
--   BMI categories contain multiple classifications, which will later be converted into a binary variable for analysis.
-
-## Identifying Distribution and Checking Normality
-
-We use a histogram to visualize the distribution of age and assess normality.
-
+Next, we analyse the relationship between BMI Group Proportion by Sex. In @fig-bar2 we see there are noticeable differences in BMI group proportions between males and females. Males appear slightly more likely to be overweight, whereas females show relatively higher proportions in the normal and obese categories. Gender thus influences BMI distribution patterns.
 ```{r}
-ggplot(obesity, aes(x = Age)) +
-  geom_histogram(binwidth = 5, fill = "#2c3e50", color = "white", alpha = 0.8) +
+#| echo: false
+#| warning: false
+#| fig-cap: Bar plot showing the relationship between Sex and BMIgroup
+#| label: fig-bar2
+#| fig-height: 2
+ggplot(obesity, aes(x = Sex, fill = BMIgroup)) +
+  geom_bar(position = "fill") +
+  labs(title = "BMI Group Proportion by Sex", x = "Sex", y = "Proportion") +
+  theme_minimal()
+```
+Finally, we want to assess the relationship between Education and BMIgroup. In @fig-bar3 shows that the education level is related to BMI groups. Individuals with higher educational qualifications generally have higher proportions of normal weight and lower proportions of obesity. Conversely, individuals with fewer or no qualifications show a greater proportion of obesity. Socio-economic factors, represented by education levels, clearly impact obesity rates.
+```{r}
+#| echo: false
+#| warning: false
+#| fig-cap: Bar plot showing the relationship between Education and BMIgroup
+#| label: fig-bar3
+#| fig-height: 3
+
+ggplot(obesity, aes(x = Education, fill = BMIgroup)) +
+  geom_bar(position = "fill") +
+  labs(title = "BMI Group Proportion by Education", x = "Education", y = "Proportion") +
   theme_minimal() +
-  labs(title = "Histogram of Age Distribution", x = "Age", y = "Count")
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-The histogram reveals that the age distribution in the dataset is approximately bell-shaped but slightly right-skewed. The majority of individuals fall within the 40-60 age range, while younger individuals (\<20 years) and older individuals (\>80 years) are less represented. The right skew suggests that there are more older individuals in the dataset than younger ones.
-
-## Identifying outliers:
-
-To detect outliers, we use a boxplot to visualize the spread of ages within each 
-
-```{r}
-ggplot(obesity, aes(x = BMIgroup, y = Age)) +
-  geom_boxplot(fill = "#2c3e50", color = "white") +
-  theme_minimal() +
-  labs(title = "Boxplot of Age by BMI Group", x = "BMI Group", y = "Age")
-```
-
-The boxplot provides a visual summary of the distribution of age across different BMI categories (Normal, Obese, Overweight, and Underweight). Key observations include:
-
--   The median age varies slightly across BMI groups, with individuals classified as overweight and obese tending to be older than those in the normal or underweight categories.
-
--   The interquartile range (IQR) (middle 50% of the data) shows that most individuals are between 40 and 70 years old, regardless of BMI classification.
-
--   There are potential outliers, particularly among younger and older individuals, indicating that some individuals outside the usual age range may require further investigation.
-
-## Creating a Binary Obesity Classification
-
-Since we want to analyze obesity prevalence, we create a new binary response variable where:
-
--   Obese = 1
-
--   Not Obese (Normal & Overweight) = 0
-
-```{r}
-obesity <- obesity %>% 
-  mutate(ObeseBinary = ifelse(BMIgroup == "Obese", 1, 0))
-
-# Check the new variable
-table(obesity$ObeseBinary)
-```
-
-## BMI Trends Over Time
-
-Analyzing how obesity has changed over time using proportions.
-
-```{r}
-bmi_trends <- obesity %>%
-  group_by(Year, BMIgroup) %>%
-  summarise(count = n(), .groups = "drop") %>%
-  group_by(Year) %>%
-  mutate(proportion = count / sum(count))
-
-# Visualization
-ggplot(bmi_trends, aes(x = factor(Year), y = proportion, fill = BMIgroup)) +
-  geom_bar(stat = "identity", position = "stack") +
-  theme_minimal() +
-  labs(title = "BMI Trends Over Time", x = "Year", y = "Proportion", fill = "BMI Group")
-```
-
-Key findings:
-
--   The proportion of obese individuals appears relatively stable over the years.
-
--   A significant proportion of individuals are classified as overweight.
-
-## Obesity Distribution by Demographics
-
-### By Age Group
-
-```{r}
-obesity$AgeGroup <- cut(obesity$Age, breaks = c(0, 18, 30, 45, 60, 75, 100),
-                    labels = c("<18", "18-30", "30-45", "45-60", "60-75", "75+"))
-
-obesity_age_counts <- obesity %>% filter(ObeseBinary == 1) %>%
-  group_by(AgeGroup) %>% summarise(Count = n())
-
-ggplot(obesity_age_counts, aes(x = AgeGroup, y = Count, fill = AgeGroup)) +
-  geom_bar(stat = "identity") +
-  theme_minimal() +
-  labs(title = "Obesity Prevalence by Age Group", x = "Age Group", y = "Count of Obese Individuals")
-```
-
--   Middle-aged individuals (45-60) have the highest obesity rates.
-
-### By Gender
-
-```{r}
-obesity_sex_counts <- obesity %>% filter(ObeseBinary == 1) %>%
-  group_by(Sex) %>% summarise(Count = n())
-
-ggplot(obesity_sex_counts, aes(x = Sex, y = Count, fill = Sex)) +
-  geom_bar(stat = "identity") +
-  theme_minimal() +
-  labs(title = "Obesity Prevalence by Sex", x = "Sex", y = "Count of Obese Individuals")
-```
-
--   Females exhibit higher obesity rates compared to males.
-
-# Correlation Analysis
-
-Examining the relationship between Age and Obesity.
-
-```{r}
-cor.test(obesity$Age, obesity$ObeseBinary, method = "pearson")
-```
-
-```{r}
-ggplot(obesity, aes(x = Age, y = ObeseBinary)) +
-  geom_jitter(alpha = 0.3, color = "#2c3e50") +
-  theme_minimal() +
-  labs(title = "Scatterplot of Age vs. Obesity", x = "Age", y = "Obesity (1 = Obese, 0 = Not Obese)")
-```
-
-```{r}
-
-bmi_trends <- obesity%>% group_by(Year, BMIgroup) %>% summarise(count = n(), .groups =
-"drop") %>% group_by(Year) %>% mutate(proportion = count / sum(count))
-
-```
-
-The scatter plot illustrates the relationship between age and obesity, where obesity is represented as a binary variable (1= Obese, 0= Not obese). The distribution of points suggest that obesity is present across all ages groups without a strong visual trend. The calculated correlation coefficient of 0.099 indicates a very weak positive relationship, meaning that as age increases, there is only a slight tendency for obesity prevalence to rise.
 
 # Formal data analysis {#sec-formdata}
 
-| Year | Obese proportions |
-|------|-------------------|
-| 2013 | 0.30300569        |
-| 2014 | 0.30181715        |
-| 2015 | 0.30645161        |
-| 2016 | 0.30536494        |
-
 ```{r}
-bmi_trends <- bmi_trends %>%
+bmi_trends <- BMI %>%
   mutate(obese_binary = ifelse(BMIgroup == "Obese", 1, 0))
 
 ```
@@ -234,10 +118,11 @@ bmi_trends <- bmi_trends %>%
 ```{r}
 #| echo: false
 #| warning: false
+#| eval: false
 bmi_trends$BMIgroup<-as.factor(bmi_trends$BMIgroup)
 levels(bmi_trends$BMIgroup)<-c("Not Obese","Obese","Not Obese","Not Obese")
 trend_table <- table(bmi_trends$Year, bmi_trends$obese_binary)
-head(trend_table)
+
 prop.trend.test(x = trend_table[,2],  
                 n = rowSums(trend_table))  
 unique(bmi_trends$Year)
@@ -247,9 +132,13 @@ chisq.test(trend_table)
 ```
 
 ```{r}
+#| tab-cap: "output to check if obesity changes over year"
+#| label: tab-amina1
+#| message: false
+
 glm_model <- glm(obese_binary ~ as.numeric(Year), 
                  data = bmi_trends, family = binomial)
-summary(glm_model)
+tab_model(glm_model, show.r2 = FALSE, show.obs = FALSE)
 
 ```
 
@@ -269,62 +158,136 @@ Overall, all statistical tests confirm that obesity prevalence in Scotland has r
 
 To answer the second question, we use linear regression to find out if age, gender, socio-economic status, or lifestyle factors are significant predictors for obesity.
 
-We start by looking at if age is a significant predictor.
+We start by looking at if age is a significant predictor for a persons BMI group. We are fitting the following linear model:
+
+$$
+logit(\pi) = \beta_0 + \beta_1 x_i + \epsilon_i, ~~~~~ \epsilon_i \sim N(0, \sigma^2), ~~~~~ i = 1, ... , 14017
+$$
+
+Here, $\pi$ is the probability that the individual is obese, $x_i$ is the age of the ith individual, and $\beta_0$, $\beta_1$ are regression coefficients. We are using the logit link function.
 
 ```{r}
 #| echo: false
 #| eval: true
+#| tab-cap: "output from linear regression with age as the predictor"
+#| label: tab-regression1
+#| warnings: false
+#| message: false
+
+
 BMI$BMIgroup <- as.factor(BMI$BMIgroup)
 levels(BMI$BMIgroup) <- c("Not Obese", "Obese", "Not Obese", "Not Obese")
+BMI$BMIgroup <- relevel(BMI$BMIgroup, ref = "Obese")
+
 
 # Regression to check if Age is a significant predictor
 model_age <- glm(BMIgroup ~ Age,
                      data = BMI,
                      family = binomial)
 
-# Interpretation is in log-odds!
-model_age %>% tidy(conf.int = T)
-
-# Model diagnostics - Checking for overdispersion
-check_overdispersion(model_age)
+tab_model(model_age, show.r2 = FALSE, show.obs = FALSE)
 ```
 
-We now look at sex to consider if it is significant
+As seen from the p-value, we can infer that age is a significant predictor for a persons BMI group. As someones age increases by one year, the odds of the person being obese increase by a factor of 0.99.
+
+We now check the assumptions of our model, to find out if the model is valid.
+
+```{r}
+#| label: fig-diagnostics1
+#| fig-cap: Diagnostic plots for the age model
+#| fig-height: 5
+#| fig-width: 8
+
+# Model diagnostics
+check_model(model_age, panel = TRUE)
+```
+
+There is no issues that can be seen in the posterior predictive check, influential obesvations graph, and the uniformity of resuduals graph. There does appear to be a large amount of points falling outiwth the error bounds in the binned residuals graph. We would expect about 95% of points to fall within the error bounds if the model is true. As there is a large amount of points plotted it is hard to tell if there is 95% within the error bounds, as there may be overlap. However, it appears to be good enough.
+
+We now look at sex to consider if it is significant through fitting the following model:
+
+$$
+logit(\pi) = \beta_0 + \beta_1 x_i + \epsilon_i, ~~~~~ \epsilon_i \sim N(0, \sigma^2), ~~~~~ i = 1, ... , 14017
+$$
+
+Where $x_i$ is an indicator variable taking the value 0 if the individual is a male and the value 1 if the individual is a female.
 
 ```{r}
 #| echo: false
 #| eval: true
-# Regression to check if Sex is a significant predictor
+#| tab-cap: "output from linear regression with sex as the predictor"
+#| label: tab-regression2
+#| warnings: false
+#| message: false
+
+BMI$Sex <- as.factor(BMI$Sex)
+BMI$Sex <- relevel(BMI$Sex, ref = "Male")
+
 model_sex <- glm(BMIgroup ~ Sex,
                      data = BMI,
                      family = binomial)
-
-# Interpretation is in the log-odds scale
-model_sex %>% tidy(conf.int = T) # P-value of 0.0247 -> sex is significant
-
-# Then checking for overdispersion
-check_overdispersion(model_sex)
+                     
+tab_model(model_sex, show.r2 = FALSE, show.obs = FALSE)
 ```
 
-We now look at education to consider if there is a difference in obesity based on socio-economic factors
+As seen from table 2, the p-value indicates that sex is a significant predictor at the 5% significance level. Furthermore, the odds ratio for being obese increase by 0.89 for females.
+
+Again, we check our model assumptions to find out if our results are valid.
+
+```{r}
+#| label: fig-diagnostics2
+#| fig-cap: Diagnostic plots for the sex model
+#| fig-height: 5
+#| fig-width: 8
+
+# Model diagnostics
+check_model(model_sex, panel = TRUE)
+```
+
+The plots in figure 2 look good enough. There may be issues with the binned residuals plot, however the issue likely stems from sex being a factor with 2 levels giving us only 2 points.
+
+We now look at education to consider if there is a difference in obesity based on socio-economic factors. We fit the following model:
+
+$$
+logit(\pi) = \beta_0 + \beta_1 x_i + \beta_2 x_j + \beta_3 x_k + \beta_4 x_l +\beta_5 x_m + \beta_6 x_n + \epsilon_i, ~~~~~ \epsilon_i \sim N(0, \sigma^2), ~~~~~ i = 1, ... , 14017
+$$ Where $x_i$ through $x_n$ are indicator variables taking the value 1 if they have that level of education and 0 if they do not. The $\beta_0$ term refers to the referrence level which is having a degree.
 
 ```{r}
 #| echo: false
 #| eval: true
+#| tab-cap: "output from linear regression with education as the predictor"
+#| label: tab-regression3
+#| warnings: false
+#| message: false
+
 # Regression to check if the various levels of education are significant as predictors
 model_edu <- glm(BMIgroup ~ Education,
                      data = BMI,
                      family = binomial)
 
-# interpretation is in the log-odds scale
-model_edu %>% tidy(conf.int = T) # All are significant
-
-# We again check for overdispersion
-check_overdispersion(model_edu)
+tab_model(model_edu, show.r2 = FALSE, show.obs = FALSE)
 ```
+
+As seen from table 3, all the levels of education are considered significant predictors of the persons BMI group. The odds of a person being obese is 3.05 for a person with a degree, then increases by 0.53-0.84 depending on qualification level.
+
+Again, we have to check the model assumptions.
+
+```{r}
+#| label: fig-diagnostics3
+#| fig-cap: Diagnostic plots for the education model
+#| fig-height: 5
+#| fig-width: 8
+
+# Model diagnostics
+check_model(model_edu, panel = TRUE)
+```
+
+The interpretation of figure 3 is much like the previous figures. The only graph that leaves cause for concern is the binned residuals graph, but again, becuase it is a factor, it is always going to not work as well as a continuous variable. Thus, the model is appropriate.
 
 ## Results {#sec-results}
 
 # Conclusions {#sec-conc}
 
 > > > > > > > Formal-Analysis-Q2
+
+From the previous tests, we have seen that age, sex, and education are all significant in the prediction of an individuals BMI group, indicating differences in obesity across these factors. As age increases, the odds of obesity rise. Females have higher odds of being obese than males, and lower education levels are associated with greater odds of obesity.
