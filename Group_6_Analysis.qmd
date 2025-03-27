@@ -70,7 +70,7 @@ Next, we want to explore the relationship between Age and BMIgroup. In @fig-box1
 #| warning: false
 #| fig-cap: "Box plot showing the relationship between Age and BMIgroup"
 #| label: fig-box1
-#| fig-height: 3
+#| fig-height: 2.5
 
 boxplot(Age ~ BMIgroup, data = obesity,
         main = "Age Distribution by BMI Group",
@@ -93,7 +93,7 @@ ggplot(obesity, aes(x = Sex, fill = BMIgroup)) +
   theme_minimal()
 ```
 
-To assess the impact of socio-economic status, we look at BMI distributions across education levels. Figure 4 shows that individuals with higher education levels (e.g., degrees) tend to have higher proportions of normal weight and lower obesity rates. In contrast, individuals with no qualifications show higher rates of obesity. This highlights how education - and by extension, socio-economic status - may influence obesity.
+To assess the impact of socio-economic status, we look at BMI distributions across education levels. @fig-bar3 shows that individuals with higher education levels (e.g., degrees) tend to have higher proportions of normal weight and lower obesity rates. In contrast, individuals with no qualifications show higher rates of obesity. This highlights how education - and by extension, socio-economic status - may influence obesity.
 
 ```{r}
 #| echo: false
