@@ -144,8 +144,6 @@ tab_model(glm_model, show.r2 = FALSE, show.obs = FALSE)
 
 The formal analysis of obesity prevalence trends in Scotland, using data from the Scottish Health Survey, reveals no statistically significant change over the surveyed years (2013--2016). The Chi-squared Test for Trend in Proportions (X²=0.114, p=0.736) and Pearson's Chi-squared Test (X²=0.226, p=0.973) both fail to reject the null hypothesis, indicating no evidence of a linear trend or overall difference in obesity proportions across the years. This conclusion is further supported by the logistic regression results, where the "Year" variable shows an odds ratio of 1.01 (95% CI: 0.97--1.04, p=0.736), suggesting that each passing year was associated with a non-significant change in obesity odds. The intercept (OR=0.43, p\<0.001) reflects the baseline odds of obesity but does not inform temporal trends. Overall, these results demonstrate that obesity prevalence in Scotland remained stable during the study period, with no meaningful increase or decrease detected.
 
-### Question 2
-
 To answer the second question, we use linear regression to find out if age, gender, socio-economic status, or lifestyle factors are significant predictors for obesity.
 
 We start by looking at if age is a significant predictor for a persons BMI group. We are fitting the following linear model:
@@ -157,8 +155,6 @@ $$
 Here, $\pi$ is the probability that the individual is obese, $x_i$ is the age of the ith individual, and $\beta_0$, $\beta_1$ are regression coefficients. We are using the logit link function.
 
 ```{r}
-#| echo: false
-#| eval: true
 #| tbl-cap: "Output from linear regression with age as the predictor"
 #| label: tab-regression1
 #| warnings: false
@@ -203,8 +199,6 @@ $$
 Where $x_i$ is an indicator variable taking the value 0 if the individual is a male and the value 1 if the individual is a female.
 
 ```{r}
-#| echo: false
-#| eval: true
 #| tbl-cap: "Output from linear regression with sex as the predictor"
 #| label: tab-regression2
 #| warnings: false
@@ -220,7 +214,7 @@ model_sex <- glm(BMIgroup ~ Sex,
 tab_model(model_sex, show.r2 = FALSE, show.obs = FALSE)
 ```
 
-As seen from \@tab-regression2, the p-value indicates that sex is a significant predictor at the 5% significance level. Furthermore, the odds ratio for being obese increase by 0.89 for females.
+As seen from the above table, the p-value indicates that sex is a significant predictor at the 5% significance level. Furthermore, the odds ratio for being obese increase by 0.89 for females.
 
 Again, we check our model assumptions to find out if our results are valid.
 
@@ -234,7 +228,7 @@ Again, we check our model assumptions to find out if our results are valid.
 check_model(model_sex, panel = TRUE)
 ```
 
-The plots in \@fig-diagnostics2 look good enough. There may be issues with the binned residuals plot, however the issue likely stems from sex being a factor with 2 levels giving us only 2 points.
+The plots in @fig-diagnostics2 look good enough. There may be issues with the binned residuals plot, however the issue likely stems from sex being a factor with 2 levels giving us only 2 points.
 
 We now look at education to consider if there is a difference in obesity based on socio-economic factors. We fit the following model:
 
@@ -243,14 +237,11 @@ logit(\pi) = \beta_0 + \beta_1 x_i + \beta_2 x_j + \beta_3 x_k + \beta_4 x_l +\b
 $$ Where $x_i$ through $x_n$ are indicator variables taking the value 1 if they have that level of education and 0 if they do not. The $\beta_0$ term refers to the reference level which is having a degree.
 
 ```{r}
-#| echo: false
-#| eval: true
 #| tbl-cap: "Output from linear regression with education as the predictor"
 #| label: tab-regression3
 #| warnings: false
 #| message: false
 
-# Regression to check if the various levels of education are significant as predictors
 model_edu <- glm(BMIgroup ~ Education,
                      data = BMI,
                      family = binomial)
@@ -258,7 +249,7 @@ model_edu <- glm(BMIgroup ~ Education,
 tab_model(model_edu, show.r2 = FALSE, show.obs = FALSE)
 ```
 
-As seen from \@tab-regression3, all the levels of education are considered significant predictors of the persons BMI group. The odds of a person being obese is 3.05 for a person with a degree, then increases by 0.53-0.84 depending on qualification level.
+As seen from the table above, all the levels of education are considered significant predictors of the persons BMI group. The odds of a person being obese is 3.05 for a person with a degree, then increases by 0.53-0.84 depending on qualification level.
 
 Again, we have to check the model assumptions.
 
@@ -272,9 +263,8 @@ Again, we have to check the model assumptions.
 check_model(model_edu, panel = TRUE)
 ```
 
-The interpretation of \@fig-diagnostics3 is much like the previous figures. The only graph that leaves cause for concern is the binned residuals graph, but again, because it is a factor, it is always going to not work as well as a continuous variable. Thus, the model is appropriate.
+The interpretation of @fig-diagnostics3 is much like the previous figures. The only graph that leaves cause for concern is the binned residuals graph, but again, because it is a factor, it is always going to not work as well as a continuous variable. Thus, the model is appropriate.
 
 # Conclusions {#sec-conc}
 
-This analysis confirms that obesity prevalence in Scotland remained stable from 2013 to 2016, with no statistically significant trends over time. However, the study identifies strong and valid associations between obesity and several demographic and socio-economic variables. Age, gender, and education level all significantly affect obesity status. These conclusions are supported by consistent results from both exploratory data analysis and formal statistical models, which met key diagnostic assumptions, strengthening the validity of our findings.Future research could expand on this study by incorporating additional lifestyle factors such as physical activity levels, diet quality, and income. Longitudinal studies would also help determine causal relationships over time. 
-Furthermore, spatial analysis of regional obesity patterns across Scotland may provide deeper insights for targeted public health interventions.
+This analysis confirms that obesity prevalence in Scotland remained stable from 2013 to 2016, with no statistically significant trends over time. However, the study identifies strong and valid associations between obesity and several demographic and socio-economic variables. Age, gender, and education level all significantly affect obesity status. These conclusions are supported by consistent results from both exploratory data analysis and formal statistical models, which met key diagnostic assumptions, strengthening the validity of our findings. Future research could expand on this study by incorporating additional lifestyle factors such as physical activity levels, diet quality, and income. Longitudinal studies would also help determine causal relationships over time. Furthermore, spatial analysis of regional obesity patterns across Scotland may provide deeper insights for targeted public health interventions.

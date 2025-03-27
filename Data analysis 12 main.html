@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.6.40">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -30,10 +30,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="Data analysis 12 main_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="Data analysis 12 main_files/libs/quarto-html/anchor.min.js"></script>
 <link href="Data analysis 12 main_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Data analysis 12 main_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="Data analysis 12 main_files/libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="Data analysis 12 main_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Data analysis 12 main_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Data analysis 12 main_files/libs/bootstrap/bootstrap-1bc8a17f135ab3d594c857e9f48e611b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="Data analysis 12 main_files/libs/bootstrap/bootstrap-8a79a254b8e706d3c925cde0a310d4f0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -240,9 +240,6 @@ Figure&nbsp;4: Bar plot showing the relationship between Education and BMIgroup
 </div>
 </div>
 <p>The formal analysis of obesity prevalence trends in Scotland, using data from the Scottish Health Survey, reveals no statistically significant change over the surveyed years (2013–2016). The Chi-squared Test for Trend in Proportions (X²=0.114, p=0.736) and Pearson’s Chi-squared Test (X²=0.226, p=0.973) both fail to reject the null hypothesis, indicating no evidence of a linear trend or overall difference in obesity proportions across the years. This conclusion is further supported by the logistic regression results, where the “Year” variable shows an odds ratio of 1.01 (95% CI: 0.97–1.04, p=0.736), suggesting that each passing year was associated with a non-significant change in obesity odds. The intercept (OR=0.43, p&lt;0.001) reflects the baseline odds of obesity but does not inform temporal trends. Overall, these results demonstrate that obesity prevalence in Scotland remained stable during the study period, with no meaningful increase or decrease detected.</p>
-</section>
-<section id="question-2" class="level3">
-<h3 class="anchored" data-anchor-id="question-2">Question 2</h3>
 <p>To answer the second question, we use linear regression to find out if age, gender, socio-economic status, or lifestyle factors are significant predictors for obesity.</p>
 <p>We start by looking at if age is a significant predictor for a persons BMI group. We are fitting the following linear model:</p>
 <p><span class="math display">\[
@@ -337,7 +334,7 @@ logit(\pi) = \beta_0 + \beta_1 x_i + \epsilon_i, ~~~~~ \epsilon_i \sim N(0, \sig
 
 </div>
 </div>
-<p>As seen from @tab-regression2, the p-value indicates that sex is a significant predictor at the 5% significance level. Furthermore, the odds ratio for being obese increase by 0.89 for females.</p>
+<p>As seen from the above table, the p-value indicates that sex is a significant predictor at the 5% significance level. Furthermore, the odds ratio for being obese increase by 0.89 for females.</p>
 <p>Again, we check our model assumptions to find out if our results are valid.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -353,7 +350,7 @@ Figure&nbsp;6: Diagnostic plots for the sex model
 </div>
 </div>
 </div>
-<p>The plots in @fig-diagnostics2 look good enough. There may be issues with the binned residuals plot, however the issue likely stems from sex being a factor with 2 levels giving us only 2 points.</p>
+<p>The plots in <a href="#fig-diagnostics2" class="quarto-xref">Figure&nbsp;6</a> look good enough. There may be issues with the binned residuals plot, however the issue likely stems from sex being a factor with 2 levels giving us only 2 points.</p>
 <p>We now look at education to consider if there is a difference in obesity based on socio-economic factors. We fit the following model:</p>
 <p><span class="math display">\[
 logit(\pi) = \beta_0 + \beta_1 x_i + \beta_2 x_j + \beta_3 x_k + \beta_4 x_l +\beta_5 x_m + \beta_6 x_n + \epsilon_i, ~~~~~ \epsilon_i \sim N(0, \sigma^2), ~~~~~ i = 1, ... , 14017
@@ -426,7 +423,7 @@ or equiv]</td>
 
 </div>
 </div>
-<p>As seen from @tab-regression3, all the levels of education are considered significant predictors of the persons BMI group. The odds of a person being obese is 3.05 for a person with a degree, then increases by 0.53-0.84 depending on qualification level.</p>
+<p>As seen from the table above, all the levels of education are considered significant predictors of the persons BMI group. The odds of a person being obese is 3.05 for a person with a degree, then increases by 0.53-0.84 depending on qualification level.</p>
 <p>Again, we have to check the model assumptions.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -442,12 +439,12 @@ Figure&nbsp;7: Diagnostic plots for the education model
 </div>
 </div>
 </div>
-<p>The interpretation of @fig-diagnostics3 is much like the previous figures. The only graph that leaves cause for concern is the binned residuals graph, but again, because it is a factor, it is always going to not work as well as a continuous variable. Thus, the model is appropriate.</p>
+<p>The interpretation of <a href="#fig-diagnostics3" class="quarto-xref">Figure&nbsp;7</a> is much like the previous figures. The only graph that leaves cause for concern is the binned residuals graph, but again, because it is a factor, it is always going to not work as well as a continuous variable. Thus, the model is appropriate.</p>
 </section>
 </section>
 <section id="sec-conc" class="level1">
 <h1>Conclusions</h1>
-<p>The Scottish Health Survey data shows no significant change in obesity prevalence between 2013 and 2016, with stable BMI proportions. However, demographic and socio-economic factors influence obesity distribution: older individuals are more likely obese, while younger ones are often underweight. Males have higher overweight rates, whereas females show greater proportions in normal and obese categories. Higher education correlates with lower obesity, while fewer qualifications link to higher obesity. Despite stable overall rates, age, gender, and education significantly impact obesity.</p>
+<p>This analysis confirms that obesity prevalence in Scotland remained stable from 2013 to 2016, with no statistically significant trends over time. However, the study identifies strong and valid associations between obesity and several demographic and socio-economic variables. Age, gender, and education level all significantly affect obesity status. These conclusions are supported by consistent results from both exploratory data analysis and formal statistical models, which met key diagnostic assumptions, strengthening the validity of our findings. Future research could expand on this study by incorporating additional lifestyle factors such as physical activity levels, diet quality, and income. Longitudinal studies would also help determine causal relationships over time. Furthermore, spatial analysis of regional obesity patterns across Scotland may provide deeper insights for targeted public health interventions.</p>
 </section>
 
 </main>
