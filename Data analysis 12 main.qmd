@@ -114,20 +114,17 @@ bmi_trends <- BMI %>%
 
 ```
 
-```{r}
+#### Table showing Chi-squared results
 
-#| warning: false
-bmi_trends$BMIgroup<-as.factor(bmi_trends$BMIgroup)
-levels(bmi_trends$BMIgroup)<-c("Not Obese","Obese","Not Obese","Not Obese")
-trend_table <- table(bmi_trends$Year, bmi_trends$obese_binary)
+| X-squared | df  | p-value |
+|-----------|-----|---------|
+| 0.11404   | 1   | 0.7356  |
 
-prop.trend.test(x = trend_table[,2],  
-                n = rowSums(trend_table))  
-unique(bmi_trends$Year)
-unique(bmi_trends$obese_binary)
-bmi_trends$Year<-as.factor(bmi_trends$Year)
-chisq.test(trend_table)
-```
+#### Table showing Pearson's Chi-squared results
+
+| X-squared | df  | p-value |
+|-----------|-----|---------|
+| 0.22577   | 3   | 0.9733  |
 
 ```{r}
 #| tab-cap: "output to check if obesity changes over year"

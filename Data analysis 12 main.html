@@ -128,29 +128,43 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell">
 
 </div>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Chi-squared Test for Trend in Proportions
-
-data:  trend_table[, 2] out of rowSums(trend_table) ,
- using scores: 1 2 3 4
-X-squared = 0.11404, df = 1, p-value = 0.7356</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2016 2015 2014 2013</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1 0</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Pearson's Chi-squared test
-
-data:  trend_table
-X-squared = 0.22577, df = 3, p-value = 0.9733</code></pre>
-</div>
-</div>
+<section id="table-showing-chi-squared-results" class="level4">
+<h4 class="anchored" data-anchor-id="table-showing-chi-squared-results">Table showing Chi-squared results</h4>
+<table class="table">
+<thead>
+<tr class="header">
+<th>X-squared</th>
+<th>df</th>
+<th>p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.11404</td>
+<td>1</td>
+<td>0.7356</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="table-showing-pearsons-chi-squared-results" class="level4">
+<h4 class="anchored" data-anchor-id="table-showing-pearsons-chi-squared-results">Table showing Pearson’s Chi-squared results</h4>
+<table class="table">
+<thead>
+<tr class="header">
+<th>X-squared</th>
+<th>df</th>
+<th>p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0.22577</td>
+<td>3</td>
+<td>0.9733</td>
+</tr>
+</tbody>
+</table>
 <div class="cell" data-tab.cap="output to check if obesity changes over year">
 <div class="cell-output-display">
 
@@ -167,9 +181,9 @@ X-squared = 0.22577, df = 3, p-value = 0.9733</code></pre>
 </tr>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">(Intercept)</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.43</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.39&nbsp;–&nbsp;0.47</td>
-<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  "><strong>&lt;0.001</strong></td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.00</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.00&nbsp;–&nbsp;131922148920640185303040.00</td>
+<td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:center;  ">0.717</td>
 </tr>
 <tr>
 <td style=" padding:0.2cm; text-align:left; vertical-align:top; text-align:left; ">Year</td>
@@ -183,6 +197,7 @@ X-squared = 0.22577, df = 3, p-value = 0.9733</code></pre>
 </div>
 </div>
 <p>The formal analysis of obesity prevalence trends in Scotland, using data from the Scottish Health Survey, reveals no statistically significant change over the surveyed years (2013–2016). The Chi-squared Test for Trend in Proportions (X²=0.114, p=0.736) and Pearson’s Chi-squared Test (X²=0.226, p=0.973) both fail to reject the null hypothesis, indicating no evidence of a linear trend or overall difference in obesity proportions across the years. This conclusion is further supported by the logistic regression results, where the “Year” variable shows an odds ratio of 1.01 (95% CI: 0.97–1.04, p=0.736), suggesting that each passing year was associated with a non-significant change in obesity odds. The intercept (OR=0.43, p&lt;0.001) reflects the baseline odds of obesity but does not inform temporal trends. Overall, these results demonstrate that obesity prevalence in Scotland remained stable during the study period, with no meaningful increase or decrease detected.</p>
+</section>
 <section id="question-2" class="level3">
 <h3 class="anchored" data-anchor-id="question-2">Question 2</h3>
 <p>To answer the second question, we use linear regression to find out if age, gender, socio-economic status, or lifestyle factors are significant predictors for obesity.</p>
@@ -360,13 +375,7 @@ logit(\pi) = \beta_0 + \beta_1 x_i + \beta_2 x_j + \beta_3 x_k + \beta_4 x_l +\b
 </section>
 <section id="sec-conc" class="level1">
 <h1>Conclusions</h1>
-<p>The analysis of the Scottish Health Survey data suggests that there has been no significant change in obesity prevalence in Scotland between 2013 and 2016, as indicated by the stable proportion of BMI groups over time.Furthermore, demographic and socio-economic factors appear to play a role in obesity distribution:</p>
-<ul>
-<li><p>Older individuals are more likely to be classified as obese, while younger individuals are more frequently found in the underweight category</p></li>
-<li><p>Males tend to have a higher proportion of overweight individuals, whereas females exhibit relatively greater proportions in the normal and obese BMI categories.</p></li>
-<li><p>Higher educational qualifications are associated with a lower prevalence of obesity, whereas individuals with fewer or no qualifications tend to have a higher proportion of obesity.</p></li>
-</ul>
-<p>These findings suggest that while overall obesity rates have remained stable, socio-demographic factors such as age, gender, and education level significantly influence obesity.</p>
+<p>The Scottish Health Survey data shows no significant change in obesity prevalence between 2013 and 2016, with stable BMI proportions. However, demographic and socio-economic factors influence obesity distribution: older individuals are more likely obese, while younger ones are often underweight. Males have higher overweight rates, whereas females show greater proportions in normal and obese categories. Higher education correlates with lower obesity, while fewer qualifications link to higher obesity. Despite stable overall rates, age, gender, and education significantly impact obesity.</p>
 </section>
 
 </main>
