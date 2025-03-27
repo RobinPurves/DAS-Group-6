@@ -274,12 +274,4 @@ The interpretation of figure 3 is much like the previous figures. The only graph
 
 # Conclusions {#sec-conc}
 
-The analysis of the Scottish Health Survey data suggests that there has been no significant change in obesity prevalence in Scotland between 2013 and 2016, as indicated by the stable proportion of BMI groups over time.Furthermore, demographic and socio-economic factors appear to play a role in obesity distribution:
-
--   Older individuals are more likely to be classified as obese, while younger individuals are more frequently found in the underweight category
-
--   Males tend to have a higher proportion of overweight individuals, whereas females exhibit relatively greater proportions in the normal and obese BMI categories.
-
--   Higher educational qualifications are associated with a lower prevalence of obesity, whereas individuals with fewer or no qualifications tend to have a higher proportion of obesity.
-
-These findings suggest that while overall obesity rates have remained stable, socio-demographic factors such as age, gender, and education level significantly influence obesity.
+The Scottish Health Survey data shows no significant change in obesity prevalence between 2013 and 2016, with stable BMI proportions. However, demographic and socio-economic factors influence obesity distribution: older individuals are more likely obese, while younger ones are often underweight. Males have higher overweight rates, whereas females show greater proportions in normal and obese categories. Higher education correlates with lower obesity, while fewer qualifications link to higher obesity. Despite stable overall rates, age, gender, and education significantly impact obesity.
