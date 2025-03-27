@@ -178,7 +178,7 @@ model_age <- glm(BMIgroup ~ Age,
 tab_model(model_age, show.r2 = FALSE, show.obs = FALSE)
 ```
 
-As seen from the p-value, we can infer that age is a significant predictor for a persons BMI group. As someones age increases by one year, the odds of the person being obese increase by a factor of 0.99.
+As seen the p-value from @tab-regression1 , we can infer that age is a significant predictor for a persons BMI group. As someones age increases by one year, the odds of the person being obese increase by a factor of 0.99.
 
 We now check the assumptions of our model, to find out if the model is valid.
 
