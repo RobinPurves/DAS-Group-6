@@ -214,13 +214,7 @@ model_sex <- glm(BMIgroup ~ Sex,
 tab_model(model_sex, show.r2 = FALSE, show.obs = FALSE)
 ```
 
-<<<<<<< HEAD
-As seen from the above table, the p-value indicates that sex is a significant predictor at the 5% significance level. Furthermore, the odds ratio for being obese increase by 0.89 for females.
-=======
-As seen from @tab-regression2, the p-value indicates that sex is a significant predictor at the 5% significance level. Furthermore, the odds ratio for being obese increase by 0.89 for females.
->>>>>>> eff281034a051653bb2dfa8d9154fb7e75b781a5
-
-Again, we check our model assumptions to find out if our results are valid.
+As seen from the above table, the p-value indicates that sex is a significant predictor at the 5% significance level. Furthermore, the odds ratio for being obese increase by 0.89 for females. Again, we check our model assumptions to find out if our results are valid.
 
 ```{r}
 #| label: fig-diagnostics2
@@ -254,12 +248,7 @@ tab_model(model_edu, show.r2 = FALSE, show.obs = FALSE)
 ```
 
 <<<<<<< HEAD
-As seen from the table above, all the levels of education are considered significant predictors of the persons BMI group. The odds of a person being obese is 3.05 for a person with a degree, then increases by 0.53-0.84 depending on qualification level.
-=======
-As seen from @tab-regression3, all the levels of education are considered significant predictors of the persons BMI group. The odds of a person being obese is 3.05 for a person with a degree, then increases by 0.53-0.84 depending on qualification level.
->>>>>>> eff281034a051653bb2dfa8d9154fb7e75b781a5
-
-Again, we have to check the model assumptions.
+As seen from the table above, all the levels of education are considered significant predictors of the persons BMI group. The odds of a person being obese is 3.05 for a person with a degree, then increases by 0.53-0.84 depending on qualification level. Again, we have to check the model assumptions.
 
 ```{r}
 #| label: fig-diagnostics3
