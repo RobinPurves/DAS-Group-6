@@ -58,7 +58,7 @@ ggplot(obesity, aes(x = factor(Year), fill = BMIgroup)) +
   theme_minimal()
 ```
 
-Next, we want to explore the relationship between Age and BMIgroup.In @fig-box1 shows that the age distribution varies significantly across different BMI groups. Generally, obese individuals tend to be older, whereas the underweight group is comparatively younger. This indicates age is an important factor associated with BMI categories.
+Next, we want to explore the relationship between Age and BMIgroup. In @fig-box1 shows that the age distribution varies significantly across different BMI groups. Generally, obese individuals tend to be older, whereas the underweight group is comparatively younger. This indicates age is an important factor associated with BMI categories.
 
 ```{r}
 #| echo: false
@@ -88,7 +88,7 @@ ggplot(obesity, aes(x = Sex, fill = BMIgroup)) +
   theme_minimal()
 ```
 
-To assess the impact of socio-economic status, we look at BMI distributions across education levels. Figure 4 shows that individuals with higher education levels (e.g., degrees) tend to have higher proportions of normal weight and lower obesity rates. In contrast, individuals with no qualifications show higher rates of obesity. This highlights how education---and by extension, socio-economic status---may influence obesity.
+To assess the impact of socio-economic status, we look at BMI distributions across education levels. Figure 4 shows that individuals with higher education levels (e.g., degrees) tend to have higher proportions of normal weight and lower obesity rates. In contrast, individuals with no qualifications show higher rates of obesity. This highlights how education - and by extension, socio-economic status - may influence obesity.
 
 ```{r}
 #| echo: false
@@ -127,7 +127,7 @@ bmi_trends <- BMI %>%
 | 0.22577   | 3   | 0.9733  |
 
 ```{r}
-#| tab-cap: "output to check if obesity changes over year"
+#| tbl-cap: "Output to check if obesity changes over year"
 #| label: tab-amina1
 #| message: false
 
@@ -154,7 +154,7 @@ Here, $\pi$ is the probability that the individual is obese, $x_i$ is the age of
 ```{r}
 #| echo: false
 #| eval: true
-#| tab-cap: "output from linear regression with age as the predictor"
+#| tbl-cap: "Output from linear regression with age as the predictor"
 #| label: tab-regression1
 #| warnings: false
 #| message: false
@@ -200,7 +200,7 @@ Where $x_i$ is an indicator variable taking the value 0 if the individual is a m
 ```{r}
 #| echo: false
 #| eval: true
-#| tab-cap: "output from linear regression with sex as the predictor"
+#| tbl-cap: "Output from linear regression with sex as the predictor"
 #| label: tab-regression2
 #| warnings: false
 #| message: false
@@ -215,7 +215,7 @@ model_sex <- glm(BMIgroup ~ Sex,
 tab_model(model_sex, show.r2 = FALSE, show.obs = FALSE)
 ```
 
-As seen from table 2, the p-value indicates that sex is a significant predictor at the 5% significance level. Furthermore, the odds ratio for being obese increase by 0.89 for females.
+As seen from \@tab-regression2, the p-value indicates that sex is a significant predictor at the 5% significance level. Furthermore, the odds ratio for being obese increase by 0.89 for females.
 
 Again, we check our model assumptions to find out if our results are valid.
 
@@ -229,7 +229,7 @@ Again, we check our model assumptions to find out if our results are valid.
 check_model(model_sex, panel = TRUE)
 ```
 
-The plots in figure 2 look good enough. There may be issues with the binned residuals plot, however the issue likely stems from sex being a factor with 2 levels giving us only 2 points.
+The plots in \@fig-diagnostics2 look good enough. There may be issues with the binned residuals plot, however the issue likely stems from sex being a factor with 2 levels giving us only 2 points.
 
 We now look at education to consider if there is a difference in obesity based on socio-economic factors. We fit the following model:
 
@@ -240,7 +240,7 @@ $$ Where $x_i$ through $x_n$ are indicator variables taking the value 1 if they 
 ```{r}
 #| echo: false
 #| eval: true
-#| tab-cap: "output from linear regression with education as the predictor"
+#| tbl-cap: "Output from linear regression with education as the predictor"
 #| label: tab-regression3
 #| warnings: false
 #| message: false
@@ -253,7 +253,7 @@ model_edu <- glm(BMIgroup ~ Education,
 tab_model(model_edu, show.r2 = FALSE, show.obs = FALSE)
 ```
 
-As seen from table 3, all the levels of education are considered significant predictors of the persons BMI group. The odds of a person being obese is 3.05 for a person with a degree, then increases by 0.53-0.84 depending on qualification level.
+As seen from \@tab-regression3, all the levels of education are considered significant predictors of the persons BMI group. The odds of a person being obese is 3.05 for a person with a degree, then increases by 0.53-0.84 depending on qualification level.
 
 Again, we have to check the model assumptions.
 
@@ -267,7 +267,7 @@ Again, we have to check the model assumptions.
 check_model(model_edu, panel = TRUE)
 ```
 
-The interpretation of figure 3 is much like the previous figures. The only graph that leaves cause for concern is the binned residuals graph, but again, because it is a factor, it is always going to not work as well as a continuous variable. Thus, the model is appropriate.
+The interpretation of \@fig-diagnostics3 is much like the previous figures. The only graph that leaves cause for concern is the binned residuals graph, but again, because it is a factor, it is always going to not work as well as a continuous variable. Thus, the model is appropriate.
 
 # Conclusions {#sec-conc}
 
