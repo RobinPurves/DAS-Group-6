@@ -4,6 +4,11 @@ subtitle: Group 6
 author: Amina Rage (2652872R), Robin Purves (2763403P), Yassmine Boukhobezaa (2796790B), Yu Zhao (2724171Z)
 format: html
 editor: visual
+geometry:
+- left=1in
+- right=1in
+- bottom=1.5in
+- top=1in
 execute: 
   echo: false
 ---
